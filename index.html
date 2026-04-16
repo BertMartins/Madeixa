@@ -7,1072 +7,785 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root {
-      --bg: #FAF5EE;
-      --bg-grad: linear-gradient(160deg, #FAF5EE 0%, #F3EBE0 100%);
-      --surface: #FFFFFF;
-      --surface-hover: #F9F4ED;
-      --surface-alt: #F3EBE0;
-      --primary: #7B5B42;
-      --primary-hover: #63472F;
-      --primary-text: #FFFFFF;
-      --accent: #B87333;
-      --accent-light: rgba(184, 115, 51, 0.11);
-      --accent-glow: rgba(184, 115, 51, 0.22);
-      --text: #2C2420;
-      --text-sec: #6B5C52;
-      --text-muted: #A39488;
-      --border: #E8E0D6;
-      --border-lt: #F0EAE2;
-      --success: #5F8A52;
-      --success-bg: rgba(95,138,82,.1);
-      --warning: #C4963A;
-      --warning-bg: rgba(196,150,58,.1);
-      --error: #B85450;
-      --error-bg: rgba(184,84,80,.1);
-      --shadow-sm: 0 1px 3px rgba(44,36,32,.06);
-      --shadow: 0 4px 12px rgba(44,36,32,.08);
-      --shadow-lg: 0 12px 32px rgba(44,36,32,.12);
-      --r: 14px;
-      --r-sm: 8px;
-      --r-full: 100px;
+    :root{
+      --bg:#FAF5EE;--bg-g:linear-gradient(160deg,#FAF5EE,#F3EBE0);
+      --sf:#FFFFFF;--sf-h:#F9F4ED;--sf-a:#F3EBE0;
+      --pri:#7B5B42;--pri-h:#63472F;--pri-t:#FFFFFF;
+      --ac:#B87333;--ac-l:rgba(184,115,51,.11);--ac-g:rgba(184,115,51,.22);
+      --tx:#2C2420;--tx2:#6B5C52;--txm:#A39488;
+      --bd:#E8E0D6;--bd-l:#F0EAE2;
+      --ok:#5F8A52;--ok-bg:rgba(95,138,82,.1);
+      --warn:#C4963A;--warn-bg:rgba(196,150,58,.1);
+      --err:#B85450;--err-bg:rgba(184,84,80,.1);
+      --sh:0 4px 12px rgba(44,36,32,.08);--sh-lg:0 12px 32px rgba(44,36,32,.12);
+      --r:14px;--rs:8px;--rf:100px;
     }
-    html.dark {
-      --bg: #141110;
-      --bg-grad: linear-gradient(160deg, #141110 0%, #1C1814 100%);
-      --surface: #221D19;
-      --surface-hover: #2C2620;
-      --surface-alt: #2C2620;
-      --primary: #C9A87C;
-      --primary-hover: #D4B88E;
-      --primary-text: #141110;
-      --accent: #D4956B;
-      --accent-light: rgba(212,149,107,.14);
-      --accent-glow: rgba(212,149,107,.2);
-      --text: #EDE5DB;
-      --text-sec: #B5A898;
-      --text-muted: #736558;
-      --border: #352E28;
-      --border-lt: #2C2620;
-      --success: #8BB878;
-      --success-bg: rgba(139,184,120,.12);
-      --warning: #D4B255;
-      --warning-bg: rgba(212,178,85,.12);
-      --error: #D47470;
-      --error-bg: rgba(212,116,112,.12);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,.15);
-      --shadow: 0 4px 12px rgba(0,0,0,.2);
-      --shadow-lg: 0 12px 32px rgba(0,0,0,.3);
+    html.dark{
+      --bg:#141110;--bg-g:linear-gradient(160deg,#141110,#1C1814);
+      --sf:#221D19;--sf-h:#2C2620;--sf-a:#2C2620;
+      --pri:#C9A87C;--pri-h:#D4B88E;--pri-t:#141110;
+      --ac:#D4956B;--ac-l:rgba(212,149,107,.14);--ac-g:rgba(212,149,107,.2);
+      --tx:#EDE5DB;--tx2:#B5A898;--txm:#736558;
+      --bd:#352E28;--bd-l:#2C2620;
+      --ok:#8BB878;--ok-bg:rgba(139,184,120,.12);
+      --warn:#D4B255;--warn-bg:rgba(212,178,85,.12);
+      --err:#D47470;--err-bg:rgba(212,116,112,.12);
+      --sh:0 4px 12px rgba(0,0,0,.2);--sh-lg:0 12px 32px rgba(0,0,0,.3);
     }
-
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Manrope',sans-serif;background:var(--bg-grad);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overflow:hidden}
+    body{font-family:'Manrope',sans-serif;background:var(--bg-g);color:var(--tx);min-height:100vh;-webkit-font-smoothing:antialiased;overflow:hidden}
     h1,h2,h3,h4{font-family:'Instrument Serif',serif;font-weight:400}
-    input::placeholder,textarea::placeholder{color:var(--text-muted)}
+    input::placeholder,textarea::placeholder{color:var(--txm)}
 
-    /* ── Screens ── */
-    .scr{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .45s ease,transform .45s ease;transform:translateY(10px);overflow-y:auto;background:var(--bg-grad);display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+    .scr{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;transform:translateY(10px);overflow-y:auto;background:var(--bg-g);display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
     .scr.on{opacity:1;pointer-events:auto;transform:translateY(0);z-index:1}
-    .scr-in{max-width:640px;width:100%;margin:0 auto;padding:32px 20px 64px;flex:1;display:flex;flex-direction:column}
+    .si{max-width:660px;width:100%;margin:0 auto;padding:30px 20px 64px;flex:1;display:flex;flex-direction:column}
 
-    /* ── Brand ── */
-    .brand{font-family:'Instrument Serif',serif;font-size:52px;letter-spacing:-1px;color:var(--primary);line-height:1}
-    .brand em{font-style:italic;color:var(--accent)}
-    .tagline{font-size:13px;color:var(--text-muted);margin-top:6px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600}
+    .brand{font-family:'Instrument Serif',serif;font-size:50px;letter-spacing:-1px;color:var(--pri);line-height:1}
+    .brand em{font-style:italic;color:var(--ac)}
+    .tagline{font-size:12px;color:var(--txm);margin-top:5px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600}
+    .deco{position:absolute;border-radius:50%;pointer-events:none;animation:fl 9s ease-in-out infinite}
+    .d1{width:240px;height:240px;top:-70px;right:-50px;background:radial-gradient(circle,var(--ac-g),transparent 70%)}
+    .d2{width:160px;height:160px;bottom:-30px;left:-60px;background:radial-gradient(circle,rgba(123,91,66,.07),transparent 70%);animation-direction:reverse;animation-duration:11s}
+    @keyframes fl{0%,100%{transform:translate(0,0)}50%{transform:translate(-8px,14px)}}
 
-    /* ── Decorations ── */
-    .deco{position:absolute;border-radius:50%;pointer-events:none;animation:floatD 9s ease-in-out infinite}
-    .deco-1{width:260px;height:260px;top:-80px;right:-60px;background:radial-gradient(circle,var(--accent-glow),transparent 70%)}
-    .deco-2{width:180px;height:180px;bottom:-30px;left:-70px;background:radial-gradient(circle,rgba(123,91,66,.08),transparent 70%);animation-direction:reverse;animation-duration:11s}
-    @keyframes floatD{0%,100%{transform:translate(0,0)}50%{transform:translate(-8px,14px)}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 28px;border:none;border-radius:var(--rf);font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none}
+    .bp{background:var(--pri);color:var(--pri-t);box-shadow:var(--sh)}.bp:hover{background:var(--pri-h);box-shadow:var(--sh-lg);transform:translateY(-1px)}.bp:active{transform:translateY(0)}.bp:disabled{opacity:.4;cursor:not-allowed;transform:none}
+    .bs{background:var(--sf);color:var(--tx);border:1.5px solid var(--bd)}.bs:hover{background:var(--sf-h);border-color:var(--pri)}
+    .bg{background:transparent;color:var(--tx2);padding:10px 18px}.bg:hover{color:var(--tx);background:var(--sf-a)}
+    .bw{width:100%}
 
-    /* ── Buttons ── */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 30px;border:none;border-radius:var(--r-full);font-family:'Manrope',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .25s ease;text-decoration:none}
-    .btn-p{background:var(--primary);color:var(--primary-text);box-shadow:var(--shadow)}
-    .btn-p:hover{background:var(--primary-hover);box-shadow:var(--shadow-lg);transform:translateY(-1px)}
-    .btn-p:active{transform:translateY(0)}
-    .btn-p:disabled{opacity:.45;cursor:not-allowed;transform:none}
-    .btn-s{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
-    .btn-s:hover{background:var(--surface-hover);border-color:var(--primary)}
-    .btn-g{background:transparent;color:var(--text-sec);padding:10px 20px}
-    .btn-g:hover{color:var(--text);background:var(--surface-alt)}
-    .btn-bl{width:100%}
+    .fg{margin-bottom:18px}.fl{display:block;font-size:13px;font-weight:600;color:var(--tx);margin-bottom:6px}
+    .fi,.fsl,.fta{width:100%;padding:13px 15px;border:1.5px solid var(--bd);border-radius:var(--rs);background:var(--sf);color:var(--tx);font-family:'Manrope',sans-serif;font-size:16px;transition:border-color .2s;outline:none}
+    .fi:focus,.fsl:focus,.fta:focus{border-color:var(--ac)}
+    .fta{resize:vertical;min-height:76px}
+    .fsl{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A39488' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+    .fh{font-size:11px;color:var(--txm);margin-top:3px}
 
-    /* ── Form elements ── */
-    .form-g{margin-bottom:20px}
-    .form-l{display:block;font-size:14px;font-weight:600;color:var(--text);margin-bottom:7px}
-    .form-i,.form-sel,.form-ta{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);color:var(--text);font-family:'Manrope',sans-serif;font-size:16px;transition:border-color .2s;outline:none}
-    .form-i:focus,.form-sel:focus,.form-ta:focus{border-color:var(--accent)}
-    .form-ta{resize:vertical;min-height:80px}
-    .form-sel{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A39488' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-    .form-hint{font-size:12px;color:var(--text-muted);margin-top:4px}
+    .kw{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+    .kc{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);padding:26px 22px;box-shadow:var(--sh)}
+    .kc h2{font-size:22px;margin-bottom:3px}.kc>p{font-size:13px;color:var(--tx2);line-height:1.5;margin-bottom:18px}
+    .pww{position:relative}.pwt{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--txm);cursor:pointer;font-size:15px;padding:4px}.pwt:hover{color:var(--tx)}
 
-    /* ── API key screen ── */
-    .key-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
-    .key-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);padding:28px 24px;box-shadow:var(--shadow)}
-    .key-card h2{font-size:24px;margin-bottom:4px}
-    .key-card p{font-size:14px;color:var(--text-sec);line-height:1.6;margin-bottom:20px}
-    .pw-wrap{position:relative}
-    .pw-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:4px}
-    .pw-toggle:hover{color:var(--text)}
+    .st{font-size:32px;line-height:1.2;margin-bottom:5px}
+    .ss{font-size:14px;color:var(--tx2);line-height:1.6;margin-bottom:22px}
 
-    /* ── Section titles ── */
-    .sec-t{font-size:34px;line-height:1.2;margin-bottom:6px}
-    .sec-sub{font-size:15px;color:var(--text-sec);line-height:1.6;margin-bottom:24px}
+    .uz{border:2px dashed var(--bd);border-radius:var(--r);padding:40px 22px;text-align:center;cursor:pointer;transition:all .3s;background:var(--sf);position:relative;overflow:hidden}
+    .uz:hover,.uz.dg{border-color:var(--ac);background:var(--ac-l)}
+    .uz.has{padding:0;border-style:solid;border-color:var(--bd)}.uz.has:hover{border-color:var(--ac)}
+    .ui{width:56px;height:56px;border-radius:50%;background:var(--ac-l);color:var(--ac);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 12px}
+    .ut{font-size:15px;font-weight:600}.uh{font-size:12px;color:var(--txm);margin-top:4px}
+    .pp{width:100%;max-height:360px;object-fit:cover;display:block;border-radius:calc(var(--r) - 2px)}
+    .po{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;border-radius:calc(var(--r) - 2px)}.uz.has:hover .po{opacity:1}
+    .po span{color:#fff;font-weight:600;font-size:14px}
+    .utips{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--rs);padding:12px 14px;margin-top:12px;font-size:12px;color:var(--txm);line-height:1.5}
+    .utips strong{color:var(--tx2)}
 
-    /* ── Upload ── */
-    .upload-z{border:2px dashed var(--border);border-radius:var(--r);padding:44px 24px;text-align:center;cursor:pointer;transition:all .3s;background:var(--surface);position:relative;overflow:hidden}
-    .upload-z:hover,.upload-z.dg{border-color:var(--accent);background:var(--accent-light)}
-    .upload-z.has{padding:0;border-style:solid;border-color:var(--border)}
-    .upload-z.has:hover{border-color:var(--accent)}
-    .upl-icon{width:60px;height:60px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 14px}
-    .upl-txt{font-size:16px;font-weight:600;color:var(--text)}
-    .upl-hint{font-size:13px;color:var(--text-muted);margin-top:5px}
-    .photo-prev{width:100%;max-height:380px;object-fit:cover;display:block;border-radius:calc(var(--r) - 2px)}
-    .photo-ov{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;border-radius:calc(var(--r) - 2px)}
-    .upload-z.has:hover .photo-ov{opacity:1}
-    .photo-ov span{color:#fff;font-weight:600;font-size:15px}
-    .upl-tips{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:14px 16px;margin-top:14px;font-size:13px;color:var(--text-muted);line-height:1.6}
-    .upl-tips strong{color:var(--text-sec)}
+    .ldc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px}
+    .ldo{width:72px;height:72px;border-radius:50%;background:var(--ac-l);display:flex;align-items:center;justify-content:center;animation:po 2s ease-in-out infinite}
+    .ldo i{font-size:24px;color:var(--ac)}
+    @keyframes po{0%,100%{transform:scale(1);box-shadow:0 0 0 0 var(--ac-g)}50%{transform:scale(1.08);box-shadow:0 0 24px 8px var(--ac-g)}}
+    .ldt{font-size:24px;font-family:'Instrument Serif',serif}
+    .ldm{font-size:13px;color:var(--txm);min-height:18px;transition:opacity .3s}
+    .spinner{display:inline-block;width:17px;height:17px;border:2.5px solid var(--bd);border-top-color:var(--pri-t);border-radius:50%;animation:sp .6s linear infinite}
+    @keyframes sp{to{transform:rotate(360deg)}}
 
-    /* ── Loading ── */
-    .ld-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px}
-    .ld-orb{width:76px;height:76px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;animation:pulse-o 2s ease-in-out infinite}
-    .ld-orb i{font-size:26px;color:var(--accent)}
-    @keyframes pulse-o{0%,100%{transform:scale(1);box-shadow:0 0 0 0 var(--accent-glow)}50%{transform:scale(1.08);box-shadow:0 0 28px 10px var(--accent-glow)}}
-    .ld-title{font-size:26px;font-family:'Instrument Serif',serif}
-    .ld-msg{font-size:14px;color:var(--text-muted);min-height:20px;transition:opacity .3s}
+    /* ── Score ── */
+    .score-wrap{text-align:center;background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);padding:28px 20px;margin-bottom:20px}
+    .score-ring{width:150px;height:150px;border-radius:50%;margin:0 auto 18px;position:relative;display:flex;align-items:center;justify-content:center}
+    .score-bg{position:absolute;inset:0;border-radius:50%;transition:background 1.5s ease}
+    .score-inner{width:118px;height:118px;border-radius:50%;background:var(--sf);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1}
+    .score-num{font-size:42px;font-weight:800;font-family:'Manrope',sans-serif;line-height:1}
+    .score-of{font-size:12px;color:var(--txm);font-weight:600}
+    .score-comment{font-size:14px;color:var(--tx2);line-height:1.6;max-width:400px;margin:0 auto 18px}
+    .score-bars{max-width:380px;margin:0 auto}
+    .score-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+    .score-row-l{font-size:12px;color:var(--tx2);width:90px;text-align:right;flex-shrink:0}
+    .score-bar{flex:1;height:7px;background:var(--bd);border-radius:4px;overflow:hidden}
+    .score-bar-f{height:100%;border-radius:4px;transition:width 1.2s ease;width:0}
+    .score-row-v{font-size:13px;font-weight:700;width:32px;text-align:left}
+    .score-pot{margin-top:16px;padding:14px;background:var(--ac-l);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;gap:12px;font-size:14px;font-weight:600}
+    .score-pot .arr{color:var(--ac);font-size:20px}
 
-    /* ── Spinner inline ── */
-    .spinner{display:inline-block;width:18px;height:18px;border:2.5px solid var(--border);border-top-color:var(--primary-text);border-radius:50%;animation:spin .6s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
+    /* ── Before/After ── */
+    .ba-card{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);padding:20px;margin-bottom:20px;text-align:center}
+    .ba-h{font-size:18px;font-family:'Instrument Serif',serif;margin-bottom:4px}
+    .ba-sub{font-size:13px;color:var(--txm);margin-bottom:16px}
+    .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .ba-img-wrap{border-radius:var(--rs);overflow:hidden;position:relative}
+    .ba-img-wrap img{width:100%;height:200px;object-fit:cover;display:block}
+    .ba-label{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.6);color:#fff;padding:3px 10px;border-radius:var(--rf);font-size:11px;font-weight:600}
+    .ba-loading{padding:40px;display:flex;flex-direction:column;align-items:center;gap:12px}
+    .ba-desc{font-size:13px;color:var(--tx2);line-height:1.6;margin-top:14px;padding:12px;background:var(--sf-a);border-radius:var(--rs);text-align:left}
 
     /* ── Report cards ── */
-    .rpt-section{margin-bottom:24px;animation:cardIn .5s ease backwards}
-    .rpt-section:nth-child(2){animation-delay:.05s}
-    .rpt-section:nth-child(3){animation-delay:.1s}
-    .rpt-section:nth-child(4){animation-delay:.15s}
-    .rpt-section:nth-child(5){animation-delay:.2s}
-    .rpt-section:nth-child(6){animation-delay:.25s}
-    @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-    .rpt-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);padding:20px;margin-bottom:12px}
-    .rpt-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-    .rpt-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-    .rpt-icon.face{background:rgba(184,115,51,.12);color:#B87333}
-    .rpt-icon.color{background:rgba(168,85,140,.12);color:#A8558C}
-    .rpt-icon.hair{background:rgba(95,138,82,.12);color:#5F8A52}
-    .rpt-icon.harmony{background:rgba(196,150,58,.12);color:#C4963A}
-    .rpt-icon.cut{background:rgba(184,115,51,.12);color:#B87333}
-    .rpt-icon.dye{background:rgba(168,85,140,.12);color:#A8558C}
-    .rpt-icon.style{background:rgba(90,120,180,.12);color:#5A78B4}
-    .rpt-h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:16px}
-    .rpt-badge{display:inline-flex;padding:4px 12px;border-radius:var(--r-full);font-size:13px;font-weight:600;background:var(--accent-light);color:var(--accent)}
-    .rpt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-    .rpt-mini{background:var(--surface-alt);border-radius:var(--r-sm);padding:12px 14px}
-    .rpt-mini-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-weight:600}
-    .rpt-mini-val{font-size:15px;font-weight:600;margin-top:2px}
-    .rpt-list{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:8px}
-    .rpt-list li{font-size:14px;color:var(--text-sec);line-height:1.5;padding-left:15px;position:relative}
-    .rpt-list li::before{content:'•';position:absolute;left:0;color:var(--accent);font-weight:700}
-    .rec-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px}
-    .rec-card i{color:var(--accent);margin-top:3px;font-size:13px;flex-shrink:0}
-    .rec-name{font-weight:600;font-size:15px}
-    .rec-desc{font-size:13px;color:var(--text-sec);margin-top:2px}
-    .rec-why{font-size:12px;color:var(--accent);margin-top:4px;font-weight:500;font-style:italic}
+    .rc{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);padding:18px;margin-bottom:12px;animation:ci .5s ease backwards}
+    @keyframes ci{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .rh{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+    .ri{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .ri-f{background:rgba(184,115,51,.12);color:#B87333}.ri-c{background:rgba(168,85,140,.12);color:#A8558C}
+    .ri-h{background:rgba(95,138,82,.12);color:#5F8A52}.ri-y{background:rgba(196,150,58,.12);color:#C4963A}
+    .ri-s{background:rgba(90,120,180,.12);color:#5A78B4}
+    .r3{font-family:'Manrope',sans-serif;font-weight:700;font-size:15px}
+    .rbdg{display:inline-flex;padding:3px 11px;border-radius:var(--rf);font-size:12px;font-weight:600;background:var(--ac-l);color:var(--ac)}
+    .rgr{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px}
+    .rm{background:var(--sf-a);border-radius:var(--rs);padding:10px 12px}
+    .rm-l{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--txm);font-weight:600}
+    .rm-v{font-size:14px;font-weight:600;margin-top:2px}
+    .rl{list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:7px}
+    .rl li{font-size:13px;color:var(--tx2);line-height:1.5;padding-left:14px;position:relative}
+    .rl li::before{content:'•';position:absolute;left:0;color:var(--ac);font-weight:700}
+    .recc{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--rs);padding:13px 15px;margin-bottom:7px;display:flex;align-items:flex-start;gap:11px}
+    .recc>i{color:var(--ac);margin-top:3px;font-size:12px;flex-shrink:0}
+    .recn{font-weight:600;font-size:14px}.recd{font-size:12px;color:var(--tx2);margin-top:2px}
+    .recw{font-size:11px;color:var(--ac);margin-top:3px;font-weight:500;font-style:italic}
+    .sh{font-size:20px;margin-bottom:10px;display:flex;align-items:center;gap:9px}.sh i{color:var(--ac);font-size:16px}
 
-    /* ── Priority chips ── */
-    .pri-grid{display:flex;flex-wrap:wrap;gap:8px}
-    .pri-chip{cursor:pointer}
-    .pri-chip input{display:none}
-    .pri-chip span{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border:1.5px solid var(--border);border-radius:var(--r-full);font-size:14px;font-weight:500;color:var(--text-sec);transition:all .25s;user-select:none}
-    .pri-chip span:hover{border-color:var(--accent)}
-    .pri-chip input:checked+span{background:var(--accent-light);border-color:var(--accent);color:var(--accent);font-weight:600}
+    .pchip{cursor:pointer}.pchip input{display:none}
+    .pchip span{display:inline-flex;align-items:center;gap:5px;padding:9px 14px;border:1.5px solid var(--bd);border-radius:var(--rf);font-size:13px;font-weight:500;color:var(--tx2);transition:all .2s;user-select:none}
+    .pchip span:hover{border-color:var(--ac)}.pchip input:checked+span{background:var(--ac-l);border-color:var(--ac);color:var(--ac);font-weight:600}
+    .pgr{display:flex;flex-wrap:wrap;gap:7px}
+    .divider{height:1px;background:var(--bd);margin:28px 0}
 
-    /* ── Divider ── */
-    .divider{height:1px;background:var(--border);margin:30px 0}
+    /* ── Tabs ── */
+    .tabs{display:flex;border-bottom:2px solid var(--bd);margin-bottom:20px;gap:4px}
+    .tab{padding:10px 18px;font-size:14px;font-weight:600;color:var(--txm);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .2s;white-space:nowrap}
+    .tab.act{color:var(--ac);border-bottom-color:var(--ac)}.tab:hover{color:var(--tx)}
+    .tpanel{display:none}.tpanel.act{display:block}
 
     /* ── Calendar ── */
-    .plan-sum{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);padding:18px 20px;margin-bottom:22px;font-size:15px;line-height:1.7;color:var(--text-sec);animation:cardIn .5s ease backwards}
-    .cal-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
-    .day-c{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);overflow:hidden;animation:cardIn .5s ease backwards}
-    .day-c:nth-child(1){animation-delay:.04s}.day-c:nth-child(2){animation-delay:.08s}.day-c:nth-child(3){animation-delay:.12s}.day-c:nth-child(4){animation-delay:.16s}.day-c:nth-child(5){animation-delay:.2s}.day-c:nth-child(6){animation-delay:.24s}.day-c:nth-child(7){animation-delay:.28s}
-    .day-h{padding:13px 16px;background:var(--surface-alt);font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .2s}
-    .day-h:hover{background:var(--border-lt)}
-    .day-h i{color:var(--accent);font-size:12px;transition:transform .3s}
-    .day-h.exp i{transform:rotate(90deg)}
-    .day-badge{margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;border-radius:var(--r-full);background:var(--accent-light);color:var(--accent)}
-    .day-body{padding:0;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
-    .day-body.op{padding:14px 16px;max-height:1200px}
-    .rt-sec{margin-bottom:12px}
-    .rt-sec:last-child{margin-bottom:0}
-    .rt-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--text-muted);margin-bottom:7px;display:flex;align-items:center;gap:6px}
-    .rt-lbl i{font-size:10px}
-    .tk-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border-lt)}
-    .tk-item:last-child{border-bottom:none}
-    .tk-chk{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;background:var(--surface)}
-    .tk-chk:hover{border-color:var(--accent)}
-    .tk-chk.ck{background:var(--success);border-color:var(--success)}
-    .tk-chk.ck i{display:block}
-    .tk-chk i{display:none;color:#fff;font-size:11px}
-    .tk-info{flex:1}
-    .tk-name{font-size:14px;font-weight:600;transition:all .2s}
-    .tk-name.dn{text-decoration:line-through;opacity:.45}
-    .tk-det{font-size:12px;color:var(--text-muted);margin-top:2px}
-    .tk-dur{font-size:11px;color:var(--accent);font-weight:600;background:var(--accent-light);padding:2px 8px;border-radius:var(--r-full);white-space:nowrap;margin-top:3px}
+    .psum{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);padding:16px 18px;margin-bottom:18px;font-size:14px;line-height:1.7;color:var(--tx2)}
+    .cg{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+    .dc{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);overflow:hidden;animation:ci .5s ease backwards}
+    .dh{padding:12px 15px;background:var(--sf-a);font-weight:700;font-size:14px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;transition:background .2s}
+    .dh:hover{background:var(--bd-l)}.dh i{color:var(--ac);font-size:11px;transition:transform .3s}.dh.ex i{transform:rotate(90deg)}
+    .dbdg{margin-left:auto;font-size:10px;font-weight:600;padding:2px 9px;border-radius:var(--rf);background:var(--ac-l);color:var(--ac)}
+    .db{padding:0;max-height:0;overflow:hidden;transition:max-height .4s,padding .4s}.db.op{padding:13px 15px;max-height:1400px}
+    .rs{margin-bottom:10px}.rs:last-child{margin-bottom:0}
+    .rlb{font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;color:var(--txm);margin-bottom:6px;display:flex;align-items:center;gap:5px}.rlb i{font-size:9px}
+    .ti{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid var(--bd-l)}.ti:last-child{border-bottom:none}
+    .tc{width:21px;height:21px;border:2px solid var(--bd);border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;background:var(--sf)}
+    .tc:hover{border-color:var(--ac)}.tc.ck{background:var(--ok);border-color:var(--ok)}.tc.ck i{display:block}.tc i{display:none;color:#fff;font-size:10px}
+    .tn{font-size:13px;font-weight:600;transition:all .2s}.tn.dn{text-decoration:line-through;opacity:.4}
+    .td{font-size:11px;color:var(--txm);margin-top:1px}.tdu{font-size:10px;color:var(--ac);font-weight:600;background:var(--ac-l);padding:2px 7px;border-radius:var(--rf);white-space:nowrap;margin-top:2px}
 
-    /* ── Products / tips ── */
-    .sec-head{font-size:22px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-    .sec-head i{color:var(--accent);font-size:18px}
-    .prod-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:8px}
-    .prod-type{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);font-weight:700}
-    .prod-name{font-size:15px;font-weight:600;margin-top:3px}
-    .prod-meta{font-size:13px;color:var(--text-muted);margin-top:3px}
-    .tip-i,.avoid-i{display:flex;align-items:flex-start;gap:10px;padding:9px 0;font-size:14px;color:var(--text-sec);line-height:1.5}
-    .tip-i i{color:var(--success);margin-top:3px;flex-shrink:0}
-    .avoid-i i{color:var(--error);margin-top:3px;flex-shrink:0}
+    /* ── Shopping ── */
+    .shop-prog{background:var(--sf);border:1px solid var(--bd-l);border-radius:var(--r);padding:16px;margin-bottom:16px}
+    .shop-prog-h{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:8px}
+    .shop-prog-bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden}
+    .shop-prog-fill{height:100%;background:var(--ok);border-radius:4px;transition:width .4s}
+    .shop-cost{font-size:12px;color:var(--txm);margin-top:6px;text-align:right}
+    .shop-cat{margin-bottom:14px}
+    .shop-cat-h{display:flex;align-items:center;gap:8px;padding:10px 0;font-weight:700;font-size:14px;cursor:pointer;user-select:none;border-bottom:1px solid var(--bd-l)}
+    .shop-cat-h i:first-child{color:var(--ac);width:20px;text-align:center}
+    .shop-cat-h .arr{margin-left:auto;font-size:10px;color:var(--txm);transition:transform .3s}
+    .shop-cat-h.ex .arr{transform:rotate(90deg)}
+    .shop-cat-body{max-height:0;overflow:hidden;transition:max-height .4s}.shop-cat-body.op{max-height:800px}
+    .shop-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd-l)}
+    .shop-item:last-child{border-bottom:none}
+    .shop-chk{width:20px;height:20px;border:2px solid var(--bd);border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;background:var(--sf)}
+    .shop-chk:hover{border-color:var(--ok)}.shop-chk.ck{background:var(--ok);border-color:var(--ok)}.shop-chk.ck i{display:block}.shop-chk i{display:none;color:#fff;font-size:9px}
+    .shop-info{flex:1}
+    .shop-name{font-size:13px;font-weight:600;transition:all .2s}.shop-name.dn{text-decoration:line-through;opacity:.4}
+    .shop-desc{font-size:11px;color:var(--txm);margin-top:1px}
+    .shop-meta{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+    .shop-price{font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--rf);background:var(--ok-bg);color:var(--ok)}
+    .shop-pri{font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--rf);text-transform:uppercase;letter-spacing:.5px}
+    .pri-e{background:var(--err-bg);color:var(--err)}.pri-r{background:var(--warn-bg);color:var(--warn)}.pri-o{background:var(--sf-a);color:var(--txm)}
 
-    /* ── Actions ── */
-    .act-bar{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
-    .act-bar .btn{flex:1;min-width:140px}
+    /* ── Challenge ── */
+    .challenge{background:linear-gradient(135deg,var(--ac-l),var(--ok-bg));border:1px solid var(--bd-l);border-radius:var(--r);padding:18px;margin-bottom:18px;text-align:center}
+    .challenge i{font-size:28px;color:var(--ac);margin-bottom:8px}
+    .challenge h4{font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+    .challenge p{font-size:13px;color:var(--tx2);line-height:1.5}
 
-    /* ── Error / Toast ── */
-    .err-box{background:var(--error-bg);border:1px solid var(--error);border-radius:var(--r-sm);padding:14px 16px;color:var(--error);font-size:14px;line-height:1.5;margin-bottom:14px;display:none}
-    .err-box.show{display:block}
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-full);padding:12px 24px;font-size:14px;font-weight:500;box-shadow:var(--shadow-lg);z-index:100;opacity:0;transition:all .4s ease;pointer-events:none}
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .act{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}.act .btn{flex:1;min-width:130px}
 
-    /* ── Responsive ── */
-    @media(max-width:480px){
-      .brand{font-size:42px}.sec-t{font-size:27px}.scr-in{padding:24px 16px 48px}.rpt-grid{grid-template-columns:1fr}.act-bar{flex-direction:column}.act-bar .btn{min-width:unset}
-    }
-    .scr::-webkit-scrollbar{width:6px}.scr::-webkit-scrollbar-track{background:transparent}.scr::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+    .eb{background:var(--err-bg);border:1px solid var(--err);border-radius:var(--rs);padding:13px;color:var(--err);font-size:13px;line-height:1.4;margin-bottom:12px;display:none}.eb.show{display:block}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:var(--rf);padding:11px 22px;font-size:13px;font-weight:500;box-shadow:var(--sh-lg);z-index:100;opacity:0;transition:all .4s;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    @media(max-width:480px){.brand{font-size:40px}.st{font-size:26px}.si{padding:22px 16px 48px}.rgr{grid-template-columns:1fr}.act{flex-direction:column}.act .btn{min-width:unset}.ba-grid{grid-template-columns:1fr}.score-row-l{width:70px;font-size:11px}.tabs{overflow-x:auto}.tab{padding:9px 14px;font-size:13px}}
+    .scr::-webkit-scrollbar{width:5px}.scr::-webkit-scrollbar-track{background:transparent}.scr::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
   </style>
 </head>
 <body>
 
-<!-- ════ SCREEN: API KEY ════ -->
-<div class="scr on" id="scr-key">
-  <div class="scr-in">
-    <div class="key-wrap">
-      <div class="deco deco-1"></div>
-      <div class="deco deco-2"></div>
-      <div style="margin-bottom:36px;">
-        <div class="brand">mad<em>eixa</em></div>
-        <div class="tagline">seu visagista pessoal com ia</div>
-      </div>
-      <div class="key-card">
-        <h2><i class="fas fa-key" style="color:var(--accent);margin-right:8px;font-size:20px;"></i>Conectar API</h2>
-        <p>Insira sua chave da API do Poe para começar a consultoria. Sua chave fica salva apenas neste navegador.</p>
-        <div class="form-g">
-          <label class="form-l" for="apiKeyInput">Chave API</label>
-          <div class="pw-wrap">
-            <input class="form-i" id="apiKeyInput" type="password" placeholder="sk-..." autocomplete="off">
-            <button class="pw-toggle" id="pwToggle" type="button"><i class="fas fa-eye"></i></button>
-          </div>
-        </div>
-        <div class="form-g">
-          <label class="form-l" for="modelSelect">Modelo (com suporte a imagem)</label>
-          <select class="form-sel" id="modelSelect">
-            <option value="GPT-5.4">GPT-5.4 (recomendado)</option>
-            <option value="Claude-Sonnet-4.5">Claude Sonnet 4.5</option>
-            <option value="Gemini-3.1-Pro">Gemini 3.1 Pro</option>
-            <option value="Gemini-3-Flash">Gemini 3 Flash (rápido)</option>
-            <option value="GPT-5.4-Pro">GPT-5.4 Pro (premium)</option>
-          </select>
-          <div class="form-hint">Escolha um modelo com suporte a visão para análise de fotos.</div>
-        </div>
-        <div class="err-box" id="keyError"></div>
-        <button class="btn btn-p btn-bl" id="btnValidateKey">
-          <i class="fas fa-plug"></i> Conectar
-        </button>
-      </div>
+<!-- ═══ API KEY ═══ -->
+<div class="scr on" id="scr-key"><div class="si"><div class="kw">
+  <div class="deco d1"></div><div class="deco d2"></div>
+  <div style="margin-bottom:32px"><div class="brand">mad<em>eixa</em></div><div class="tagline">seu visagista pessoal com ia</div></div>
+  <div class="kc">
+    <h2><i class="fas fa-key" style="color:var(--ac);margin-right:7px;font-size:18px"></i>Conectar API</h2>
+    <p>Insira sua chave do Poe para começar a consultoria visagista.</p>
+    <div class="fg"><label class="fl" for="apiKey">Chave API</label><div class="pww"><input class="fi" id="apiKey" type="password" placeholder="sk-..." autocomplete="off"><button class="pwt" id="pwTog" type="button"><i class="fas fa-eye"></i></button></div></div>
+    <div class="fg"><label class="fl" for="mdlSel">Modelo de análise (com visão)</label>
+      <select class="fsl" id="mdlSel"><option value="GPT-5.4">GPT-5.4 (recomendado)</option><option value="Claude-Sonnet-4.5">Claude Sonnet 4.5</option><option value="Gemini-3.1-Pro">Gemini 3.1 Pro</option><option value="Gemini-3-Flash">Gemini 3 Flash</option></select>
     </div>
+    <div class="fg"><label class="fl" for="imgSel">Modelo de imagem (antes/depois)</label>
+      <select class="fsl" id="imgSel"><option value="Nano-Banana">Nano Banana (rápido)</option><option value="GPT-Image-1">GPT Image 1</option><option value="GPT-Image-1.5">GPT Image 1.5 (premium)</option></select>
+      <div class="fh">Gera a prévia de como você ficaria seguindo as recomendações.</div>
+    </div>
+    <div class="eb" id="keyErr"></div>
+    <button class="btn bp bw" id="btnKey"><i class="fas fa-plug"></i> Conectar</button>
   </div>
-</div>
+</div></div></div>
 
-<!-- ════ SCREEN: UPLOAD ════ -->
-<div class="scr" id="scr-upload">
-  <div class="scr-in">
-    <h1 class="sec-t">Consultoria Visagista</h1>
-    <p class="sec-sub">Envie uma foto do seu rosto e cabelo. A IA vai analisar como um visagista profissional — formato do rosto, tom de pele, tipo de cabelo, e muito mais.</p>
+<!-- ═══ UPLOAD ═══ -->
+<div class="scr" id="scr-upload"><div class="si">
+  <h1 class="st">Consultoria Visagista</h1>
+  <p class="ss">Envie uma foto do seu rosto e cabelo. A IA vai analisar como um visagista profissional.</p>
+  <div class="uz" id="uZone"><div id="uPh"><div class="ui"><i class="fas fa-cloud-arrow-up"></i></div><div class="ut">Toque para enviar uma foto</div><div class="uh">ou arraste e solte aqui</div></div><img class="pp" id="pPrev" style="display:none" alt="Preview"><div class="po"><span><i class="fas fa-camera"></i> Trocar foto</span></div><input type="file" accept="image/*" id="pInp" style="display:none"></div>
+  <div class="utips"><strong><i class="fas fa-lightbulb"></i> Para a melhor análise:</strong><br>Rosto visível + cabelo solto + boa iluminação + foto de frente</div>
+  <div class="eb" id="uErr"></div>
+  <button class="btn bp bw" id="btnAn" disabled style="margin-top:18px"><i class="fas fa-wand-magic-sparkles"></i> Iniciar análise visagista</button>
+  <button class="btn bg bw" id="btnBK" style="margin-top:5px"><i class="fas fa-arrow-left"></i> Voltar</button>
+</div></div>
 
-    <div class="upload-z" id="uploadZone">
-      <div id="uplPlaceholder">
-        <div class="upl-icon"><i class="fas fa-cloud-arrow-up"></i></div>
-        <div class="upl-txt">Toque para enviar uma foto</div>
-        <div class="upl-hint">ou arraste e solte aqui</div>
-      </div>
-      <img class="photo-prev" id="photoPrev" style="display:none" alt="Preview">
-      <div class="photo-ov" id="photoOv"><span><i class="fas fa-camera"></i> Trocar foto</span></div>
-      <input type="file" accept="image/*" id="photoInput" style="display:none">
-    </div>
+<!-- ═══ ANALYZING ═══ -->
+<div class="scr" id="scr-an"><div class="si"><div class="ldc"><div class="ldo"><i class="fas fa-sparkles"></i></div><div class="ldt">Consultoria em andamento...</div><div class="ldm" id="anMsg">Analisando formato do rosto</div></div></div></div>
 
-    <div class="upl-tips">
-      <strong><i class="fas fa-lightbulb"></i> Dicas para a análise:</strong><br>
-      Foto de frente, boa iluminação natural · Cabelo solto e seco · Rosto visível (sem óculos escuros) · Mostre ombros e cabelo inteiro
-    </div>
+<!-- ═══ REPORT ═══ -->
+<div class="scr" id="scr-rpt"><div class="si">
+  <h1 class="st">Relatório Visagista</h1>
+  <p class="ss">Sua avaliação completa de beleza e visagismo.</p>
+  <div id="scoreBox"></div>
+  <div id="baBox"></div>
+  <div id="rptBox"></div>
+  <div class="divider"></div>
+  <h2 style="font-size:26px;margin-bottom:5px">Suas preferências</h2>
+  <p class="ss">Para criar seu plano personalizado.</p>
+  <div class="fg"><label class="fl" for="iDes">Como quer deixar seu cabelo?</label><textarea class="fta" id="iDes" placeholder="Ex: Mais volume, cachos definidos, cor mais clara..."></textarea></div>
+  <div class="fg"><label class="fl" for="iRef">Referência ou inspiração?</label><input class="fi" id="iRef" placeholder="Ex: Corte da Zendaya, balayage mel..." type="text"></div>
+  <div class="fg"><label class="fl" for="iFrq">Frequência de lavagem atual</label><select class="fsl" id="iFrq"><option value="">Selecione...</option><option value="todo dia">Todo dia</option><option value="dia sim, dia não">Dia sim, dia não</option><option value="3x por semana">3x por semana</option><option value="2x por semana">2x por semana</option><option value="1x por semana">1x por semana</option><option value="a cada 10-15 dias">A cada 10-15 dias</option></select></div>
+  <div class="fg"><label class="fl">Prioridades</label><div class="pgr">
+    <label class="pchip"><input type="checkbox" value="hidratação"><span><i class="fas fa-droplet"></i> Hidratação</span></label>
+    <label class="pchip"><input type="checkbox" value="crescimento"><span><i class="fas fa-arrow-up"></i> Crescimento</span></label>
+    <label class="pchip"><input type="checkbox" value="volume"><span><i class="fas fa-up-right-and-down-left-from-center"></i> Volume</span></label>
+    <label class="pchip"><input type="checkbox" value="anti-frizz"><span><i class="fas fa-wind"></i> Anti-frizz</span></label>
+    <label class="pchip"><input type="checkbox" value="brilho"><span><i class="fas fa-sun"></i> Brilho</span></label>
+    <label class="pchip"><input type="checkbox" value="fortalecimento"><span><i class="fas fa-shield-halved"></i> Fortalecimento</span></label>
+    <label class="pchip"><input type="checkbox" value="definição"><span><i class="fas fa-circle-notch"></i> Definição</span></label>
+    <label class="pchip"><input type="checkbox" value="reparação"><span><i class="fas fa-heart-crack"></i> Reparação</span></label>
+    <label class="pchip"><input type="checkbox" value="cor"><span><i class="fas fa-palette"></i> Mudar cor</span></label>
+  </div></div>
+  <div class="eb" id="pErr"></div>
+  <button class="btn bp bw" id="btnGen"><i class="fas fa-calendar-plus"></i> Gerar plano completo</button>
+  <button class="btn bg bw" id="btnBU" style="margin-top:5px"><i class="fas fa-arrow-left"></i> Nova análise</button>
+</div></div>
 
-    <div class="err-box" id="uploadError"></div>
+<!-- ═══ GENERATING ═══ -->
+<div class="scr" id="scr-gen"><div class="si"><div class="ldc"><div class="ldo"><i class="fas fa-wand-magic-sparkles"></i></div><div class="ldt">Criando seu ritual...</div><div class="ldm" id="genMsg">Montando rotina semanal</div></div></div></div>
 
-    <button class="btn btn-p btn-bl" id="btnAnalyze" disabled style="margin-top:20px">
-      <i class="fas fa-wand-magic-sparkles"></i> Iniciar análise visagista
-    </button>
-    <button class="btn btn-g btn-bl" id="btnBackKey" style="margin-top:6px">
-      <i class="fas fa-arrow-left"></i> Voltar
-    </button>
+<!-- ═══ PLAN ═══ -->
+<div class="scr" id="scr-plan"><div class="si">
+  <h1 class="st">Seu Ritual Capilar</h1>
+  <p class="ss">Plano completo feito sob medida pelo visagista.</p>
+  <div id="challengeBox"></div>
+  <div class="psum" id="planSum"></div>
+  <div class="tabs" id="planTabs">
+    <button class="tab act" data-tab="cal"><i class="fas fa-calendar-days"></i> Rotina</button>
+    <button class="tab" data-tab="shop"><i class="fas fa-cart-shopping"></i> Compras</button>
+    <button class="tab" data-tab="exp"><i class="fas fa-download"></i> Exportar</button>
   </div>
-</div>
-
-<!-- ════ SCREEN: ANALYZING ════ -->
-<div class="scr" id="scr-analyzing">
-  <div class="scr-in">
-    <div class="ld-center">
-      <div class="ld-orb"><i class="fas fa-sparkles"></i></div>
-      <div class="ld-title">Consultoria em andamento...</div>
-      <div class="ld-msg" id="analyzingMsg">Analisando formato do rosto</div>
-    </div>
-  </div>
-</div>
-
-<!-- ════ SCREEN: REPORT + PREFS ════ -->
-<div class="scr" id="scr-report">
-  <div class="scr-in">
-    <h1 class="sec-t">Relatório Visagista</h1>
-    <p class="sec-sub">Análise completa do seu rosto e cabelo:</p>
-    <div id="reportContainer"></div>
-
-    <div class="divider"></div>
-
-    <h2 style="font-size:28px;margin-bottom:6px">Suas preferências</h2>
-    <p class="sec-sub">Para criarmos o plano perfeito de cuidados.</p>
-
-    <div class="form-g">
-      <label class="form-l" for="inpDesire">Como você quer deixar seu cabelo?</label>
-      <textarea class="form-ta" id="inpDesire" placeholder="Ex: Quero mais volume, cachos definidos, mudar a cor..."></textarea>
-    </div>
-    <div class="form-g">
-      <label class="form-l" for="inpRef">Alguma referência ou inspiração?</label>
-      <input class="form-i" id="inpRef" placeholder="Ex: Corte da Zendaya, cor da Bruna Marquezine..." type="text">
-    </div>
-    <div class="form-g">
-      <label class="form-l" for="inpFreq">Frequência de lavagem atual</label>
-      <select class="form-sel" id="inpFreq">
-        <option value="">Selecione...</option>
-        <option value="todo dia">Todo dia</option>
-        <option value="dia sim, dia não">Dia sim, dia não</option>
-        <option value="3x por semana">3 vezes por semana</option>
-        <option value="2x por semana">2 vezes por semana</option>
-        <option value="1x por semana">1 vez por semana</option>
-        <option value="a cada 10-15 dias">A cada 10-15 dias</option>
-      </select>
-    </div>
-    <div class="form-g">
-      <label class="form-l">Prioridades de cuidados</label>
-      <div class="pri-grid">
-        <label class="pri-chip"><input type="checkbox" value="hidratação"><span><i class="fas fa-droplet"></i> Hidratação</span></label>
-        <label class="pri-chip"><input type="checkbox" value="crescimento"><span><i class="fas fa-arrow-up"></i> Crescimento</span></label>
-        <label class="pri-chip"><input type="checkbox" value="volume"><span><i class="fas fa-up-right-and-down-left-from-center"></i> Volume</span></label>
-        <label class="pri-chip"><input type="checkbox" value="anti-frizz"><span><i class="fas fa-wind"></i> Anti-frizz</span></label>
-        <label class="pri-chip"><input type="checkbox" value="brilho"><span><i class="fas fa-sun"></i> Brilho</span></label>
-        <label class="pri-chip"><input type="checkbox" value="fortalecimento"><span><i class="fas fa-shield-halved"></i> Fortalecimento</span></label>
-        <label class="pri-chip"><input type="checkbox" value="definição"><span><i class="fas fa-circle-notch"></i> Definição</span></label>
-        <label class="pri-chip"><input type="checkbox" value="reparação"><span><i class="fas fa-heart-crack"></i> Reparação</span></label>
-        <label class="pri-chip"><input type="checkbox" value="oleosidade"><span><i class="fas fa-hand-sparkles"></i> Anti-oleosidade</span></label>
-        <label class="pri-chip"><input type="checkbox" value="cor"><span><i class="fas fa-palette"></i> Mudança de cor</span></label>
+  <div class="tpanel act" id="tp-cal"><div class="cg" id="calGrid"></div><div id="tipsBox"></div><div id="avoidBox"></div></div>
+  <div class="tpanel" id="tp-shop"><div id="shopBox"></div></div>
+  <div class="tpanel" id="tp-exp">
+    <div class="rc" style="text-align:center">
+      <h3 class="sh" style="justify-content:center"><i class="fas fa-file-lines"></i> Salve seu plano</h3>
+      <p style="font-size:13px;color:var(--tx2);margin-bottom:16px">Exporte para consultar quando quiser, mesmo offline.</p>
+      <div class="act" style="justify-content:center">
+        <button class="btn bp" id="btnExpTxt"><i class="fas fa-file-alt"></i> Texto (.txt)</button>
+        <button class="btn bs" id="btnExpIcs"><i class="fas fa-calendar-plus"></i> Calendário (.ics)</button>
       </div>
     </div>
-
-    <div class="err-box" id="prefsError"></div>
-
-    <button class="btn btn-p btn-bl" id="btnGenerate">
-      <i class="fas fa-calendar-plus"></i> Gerar plano de cuidados
-    </button>
-    <button class="btn btn-g btn-bl" id="btnBackUpload" style="margin-top:6px">
-      <i class="fas fa-arrow-left"></i> Nova análise
-    </button>
-  </div>
-</div>
-
-<!-- ════ SCREEN: GENERATING ════ -->
-<div class="scr" id="scr-generating">
-  <div class="scr-in">
-    <div class="ld-center">
-      <div class="ld-orb"><i class="fas fa-wand-magic-sparkles"></i></div>
-      <div class="ld-title">Criando seu ritual...</div>
-      <div class="ld-msg" id="genMsg">Montando sua rotina semanal</div>
+    <div class="rc" style="text-align:center;margin-top:12px">
+      <h3 class="sh" style="justify-content:center"><i class="fas fa-share-nodes"></i> Compartilhar resultado</h3>
+      <p style="font-size:13px;color:var(--tx2);margin-bottom:16px">Copie seu resumo para compartilhar com amigos.</p>
+      <button class="btn bs" id="btnShare"><i class="fas fa-copy"></i> Copiar resumo</button>
     </div>
   </div>
-</div>
+  <button class="btn bg bw" id="btnRestart" style="margin-top:18px"><i class="fas fa-rotate-left"></i> Recomeçar análise</button>
+</div></div>
 
-<!-- ════ SCREEN: CALENDAR ════ -->
-<div class="scr" id="scr-calendar">
-  <div class="scr-in">
-    <h1 class="sec-t">Seu Ritual Capilar</h1>
-    <p class="sec-sub">Plano semanal personalizado pelo visagista.</p>
-    <div class="plan-sum" id="planSum"></div>
-    <div class="cal-grid" id="calGrid"></div>
-    <div id="prodsBox"></div>
-    <div id="tipsBox"></div>
-    <div id="avoidBox"></div>
-    <div class="act-bar">
-      <button class="btn btn-p" id="btnExport"><i class="fas fa-download"></i> Exportar plano</button>
-      <button class="btn btn-s" id="btnRestart"><i class="fas fa-rotate-left"></i> Recomeçar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════ Dark mode ═══════ */
-if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark')}
+/* ═══ Dark mode ═══ */
+if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){e.matches?document.documentElement.classList.add('dark'):document.documentElement.classList.remove('dark')});
 
-/* ═══════ Storage (in-memory with optional persistence) ═══════ */
-var store=(function(){
-  var mem={};
-  var _ls=null;
-  try{var w=window;_ls=w['local'+'Storage'];_ls.setItem('__t','1');_ls.removeItem('__t')}catch(e){_ls=null}
-  return{
-    set:function(k,v){mem[k]=v;if(_ls)try{_ls.setItem('mx_'+k,JSON.stringify(v))}catch(e){}},
-    get:function(k,d){if(_ls)try{var v=_ls.getItem('mx_'+k);if(v!==null)return JSON.parse(v)}catch(e){}return mem[k]!==undefined?mem[k]:d},
-    del:function(k){delete mem[k];if(_ls)try{_ls.removeItem('mx_'+k)}catch(e){}}
-  };
-})();
+/* ═══ Storage ═══ */
+var store=(function(){var m={};var s=null;try{var w=window;s=w['local'+'Storage'];s.setItem('__t','1');s.removeItem('__t')}catch(e){s=null}
+return{set:function(k,v){m[k]=v;if(s)try{s.setItem('mx_'+k,JSON.stringify(v))}catch(e){}},get:function(k,d){if(s)try{var v=s.getItem('mx_'+k);if(v!==null)return JSON.parse(v)}catch(e){}return m[k]!==undefined?m[k]:d},del:function(k){delete m[k];if(s)try{s.removeItem('mx_'+k)}catch(e){}}}})();
 
-/* ═══════ State ═══════ */
-var state={
-  apiKey:store.get('apiKey',''),
-  model:store.get('model','GPT-5.4'),
-  photoFile:null,
-  photoBase64:null,
-  analysis:null,
-  preferences:null,
-  carePlan:null
-};
+/* ═══ State ═══ */
+var S={apiKey:store.get('apiKey',''),model:store.get('model','GPT-5.4'),imgModel:store.get('imgModel','Nano-Banana'),photoFile:null,photoB64:null,analysis:null,prefs:null,plan:null};
 
-/* ═══════ Helpers ═══════ */
+/* ═══ Helpers ═══ */
 function $(id){return document.getElementById(id)}
-function showScr(name){
-  var all=document.querySelectorAll('.scr');
-  for(var i=0;i<all.length;i++) all[i].classList.remove('on');
-  var t=$('scr-'+name);
-  if(t){requestAnimationFrame(function(){t.classList.add('on');t.scrollTop=0})}
-}
-var toastTm=null;
-function showToast(msg){
-  var el=$('toast');el.textContent=msg;el.classList.add('show');
-  if(toastTm)clearTimeout(toastTm);
-  toastTm=setTimeout(function(){el.classList.remove('show')},3500);
-}
-function showErr(id,msg){var el=$(id);el.textContent=msg;el.classList.add('show')}
-function hideErr(id){var el=$(id);el.textContent='';el.classList.remove('show')}
+function showScr(n){document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on')});var t=$('scr-'+n);if(t)requestAnimationFrame(function(){t.classList.add('on');t.scrollTop=0})}
+var _tt=null;function showToast(m){var e=$('toast');e.textContent=m;e.classList.add('show');if(_tt)clearTimeout(_tt);_tt=setTimeout(function(){e.classList.remove('show')},3500)}
+function showErr(id,m){var e=$(id);e.textContent=m;e.classList.add('show')}
+function hideErr(id){var e=$(id);e.textContent='';e.classList.remove('show')}
+var _li=null;function startLd(id,msgs){var i=0,e=$(id);e.textContent=msgs[0];_li=setInterval(function(){i=(i+1)%msgs.length;e.style.opacity='0';setTimeout(function(){e.textContent=msgs[i];e.style.opacity='1'},200)},2800)}
+function stopLd(){if(_li){clearInterval(_li);_li=null}}
+function fileB64(f){return new Promise(function(ok,no){var r=new FileReader();r.onload=function(){ok(r.result)};r.onerror=no;r.readAsDataURL(f)})}
 
-/* rotating loading messages */
-var ldInt=null;
-function startLd(elId,msgs){
-  var idx=0;var el=$(elId);el.textContent=msgs[0];
-  ldInt=setInterval(function(){
-    idx=(idx+1)%msgs.length;el.style.opacity='0';
-    setTimeout(function(){el.textContent=msgs[idx];el.style.opacity='1'},200);
-  },3000);
-}
-function stopLd(){if(ldInt){clearInterval(ldInt);ldInt=null}}
-
-/* file to base64 */
-function fileToBase64(file){
-  return new Promise(function(resolve,reject){
-    var r=new FileReader();
-    r.onload=function(){resolve(r.result)};
-    r.onerror=reject;
-    r.readAsDataURL(file);
-  });
-}
-
-/* JSON from bot response */
-function parseBotJSON(text){
+function parseJSON(text){
   text=text.replace(/\*Thinking\.\.\.\*\n\n(?:> [^\n]*\n?)*/g,'');
   text=text.replace(/\n*---\n+(?:Learn more|Related searches):\n[\s\S]*$/,'');
   var cb=text.match(/```(?:json)?\s*([\[{][\s\S]*?[\]}])\s*```/);
   if(cb)try{return JSON.parse(cb[1])}catch(e){}
   var raw=text.match(/[\[{][\s\S]*[\]}]/);
   if(raw)try{return JSON.parse(raw[0])}catch(e){}
+  try{return JSON.parse(text.trim())}catch(e){}
   return null;
 }
 
-/* ═══════ API CALL ═══════ */
-async function callAPI(messages,onChunk,onDone,onError){
-  var body={
-    model:state.model,
-    messages:messages,
-    stream:!!onChunk,
-    temperature:0.6
-  };
-  try{
-    var response=await fetch('https://api.poe.com/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.apiKey},
-      body:JSON.stringify(body)
-    });
-    if(!response.ok){
-      if(response.status===401||response.status===403) throw new Error('Chave API inválida ou sem permissão.');
-      throw new Error('Erro da API: '+response.status);
-    }
-    if(onChunk){
-      var reader=response.body.getReader();
-      var decoder=new TextDecoder();
-      var buffer='';
-      var fullContent='';
-      while(true){
-        var result=await reader.read();
-        if(result.done)break;
-        buffer+=decoder.decode(result.value,{stream:true});
-        var lines=buffer.split('\n');
-        buffer=lines.pop()||'';
-        for(var li=0;li<lines.length;li++){
-          var trimmed=lines[li].trim();
-          if(trimmed.indexOf('data: ')===0){
-            var data=trimmed.slice(6);
-            if(data==='[DONE]'){if(onDone)onDone(fullContent);return fullContent}
-            try{
-              var json=JSON.parse(data);
-              var delta=json.choices&&json.choices[0]&&json.choices[0].delta;
-              if(delta&&delta.content){fullContent+=delta.content;onChunk(fullContent)}
-            }catch(_e){}
-          }
-        }
-      }
-      if(onDone)onDone(fullContent);
-      return fullContent;
-    }else{
-      var respData=await response.json();
-      var content=respData.choices&&respData.choices[0]&&respData.choices[0].message&&respData.choices[0].message.content;
-      if(onDone)onDone(content||'');
-      return content||'';
-    }
-  }catch(err){
-    if(onError)onError(err.message);
-    else showToast(err.message);
-    return null;
-  }
+function extractImgUrl(text){
+  if(!text)return null;
+  var md=text.match(/!\[.*?\]\((https?:\/\/[^)]+)\)/);if(md)return md[1];
+  var cdn=text.match(/(https?:\/\/(?:pfst\.cf2\.poecdn\.net|qph\.cf2\.poecdn\.net|v3\.fal\.media)[^\s)'"]+)/i);if(cdn)return cdn[1];
+  var ext=text.match(/(https?:\/\/[^\s)'"]+\.(?:png|jpg|jpeg|webp))/i);if(ext)return ext[1];
+  return null;
 }
 
-/* ═══════ API KEY VALIDATION ═══════ */
-async function validateKey(){
-  var key=$('apiKeyInput').value.trim();
-  if(!key){showToast('Digite sua chave API');return}
-  var btn=$('btnValidateKey');
-  var orig=btn.innerHTML;
-  btn.innerHTML='<div class="spinner"></div> Verificando...';btn.disabled=true;
-  state.apiKey=key;
-  state.model=$('modelSelect').value;
+function scoreColor(v){if(v>=8)return'var(--ok)';if(v>=6)return'var(--ac)';if(v>=4)return'var(--warn)';return'var(--err)'}
+
+/* ═══ API ═══ */
+async function callAPI(messages,onChunk,onDone,onError,mdl){
+  var body={model:mdl||S.model,messages:messages,stream:!!onChunk,temperature:0.6};
   try{
-    var resp=await fetch('https://api.poe.com/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body:JSON.stringify({model:state.model,messages:[{role:'user',content:'Responda apenas: OK'}],stream:false})
-    });
-    if(!resp.ok)throw new Error('Chave inválida');
-    await resp.json();
-    store.set('apiKey',key);
-    store.set('model',state.model);
-    hideErr('keyError');
-    showToast('Conectado com sucesso!');
-    setTimeout(function(){showScr('upload')},400);
-  }catch(e){
-    showErr('keyError','Chave API inválida ou modelo não encontrado. Verifique e tente novamente.');
-    state.apiKey='';
-  }
+    var r=await fetch('https://api.poe.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+S.apiKey},body:JSON.stringify(body)});
+    if(!r.ok){if(r.status===401||r.status===403)throw new Error('Chave API inválida.');throw new Error('Erro: '+r.status)}
+    if(onChunk){
+      var reader=r.body.getReader(),dec=new TextDecoder(),buf='',full='';
+      while(true){var res=await reader.read();if(res.done)break;buf+=dec.decode(res.value,{stream:true});var lines=buf.split('\n');buf=lines.pop()||'';
+        for(var i=0;i<lines.length;i++){var tr=lines[i].trim();if(tr.indexOf('data: ')===0){var d=tr.slice(6);if(d==='[DONE]'){if(onDone)onDone(full);return full}try{var j=JSON.parse(d),dt=j.choices&&j.choices[0]&&j.choices[0].delta;if(dt&&dt.content){full+=dt.content;onChunk(full)}}catch(_e){}}}}
+      if(onDone)onDone(full);return full;
+    }else{var data=await r.json();var c=data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content;if(onDone)onDone(c||'');return c||''}
+  }catch(err){if(onError)onError(err.message);else showToast(err.message);return null}
+}
+
+/* ═══ Validate key ═══ */
+async function valKey(){
+  var k=$('apiKey').value.trim();if(!k){showToast('Digite sua chave');return}
+  var btn=$('btnKey'),orig=btn.innerHTML;btn.innerHTML='<div class="spinner"></div> Verificando...';btn.disabled=true;
+  S.apiKey=k;S.model=$('mdlSel').value;S.imgModel=$('imgSel').value;
+  try{
+    var r=await fetch('https://api.poe.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({model:S.model,messages:[{role:'user',content:'OK'}],stream:false})});
+    if(!r.ok)throw new Error('fail');await r.json();
+    store.set('apiKey',k);store.set('model',S.model);store.set('imgModel',S.imgModel);hideErr('keyErr');showToast('Conectado!');setTimeout(function(){showScr('upload')},350);
+  }catch(e){showErr('keyErr','Chave inválida ou modelo não encontrado.');S.apiKey=''}
   btn.innerHTML=orig;btn.disabled=false;
 }
 
-/* ═══════ PHOTO UPLOAD ═══════ */
-var uploadZone=$('uploadZone'),photoInput=$('photoInput'),photoPrev=$('photoPrev'),uplPlaceholder=$('uplPlaceholder');
+/* ═══ Photo upload ═══ */
+var uZ=$('uZone'),pI=$('pInp'),pP=$('pPrev'),uPh=$('uPh');
+uZ.addEventListener('click',function(){pI.click()});
+uZ.addEventListener('dragover',function(e){e.preventDefault();uZ.classList.add('dg')});
+uZ.addEventListener('dragleave',function(){uZ.classList.remove('dg')});
+uZ.addEventListener('drop',function(e){e.preventDefault();uZ.classList.remove('dg');if(e.dataTransfer.files&&e.dataTransfer.files.length)hFile(e.dataTransfer.files[0])});
+pI.addEventListener('change',function(){if(pI.files&&pI.files.length)hFile(pI.files[0])});
+function hFile(f){if(!f.type.startsWith('image/')){showErr('uErr','Envie uma imagem (JPG, PNG).');return}
+  S.photoFile=f;var r=new FileReader();r.onload=function(e){pP.src=e.target.result;pP.style.display='block';uPh.style.display='none';uZ.classList.add('has');$('btnAn').disabled=false;hideErr('uErr');S.photoB64=e.target.result};r.readAsDataURL(f)}
 
-uploadZone.addEventListener('click',function(){photoInput.click()});
-uploadZone.addEventListener('dragover',function(e){e.preventDefault();uploadZone.classList.add('dg')});
-uploadZone.addEventListener('dragleave',function(){uploadZone.classList.remove('dg')});
-uploadZone.addEventListener('drop',function(e){e.preventDefault();uploadZone.classList.remove('dg');if(e.dataTransfer.files&&e.dataTransfer.files.length)handleFile(e.dataTransfer.files[0])});
-photoInput.addEventListener('change',function(){if(photoInput.files&&photoInput.files.length)handleFile(photoInput.files[0])});
+/* ═══ Visagist Analysis ═══ */
+var anMsgs=['Analisando formato do rosto','Avaliando tom de pele','Calculando proporções faciais','Identificando tipo do cabelo','Avaliando harmonia visual','Calculando nota de beleza','Preparando recomendações'];
 
-function handleFile(file){
-  if(!file.type.startsWith('image/')){showErr('uploadError','Envie uma imagem (JPG, PNG, etc).');return}
-  state.photoFile=file;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    photoPrev.src=e.target.result;photoPrev.style.display='block';
-    uplPlaceholder.style.display='none';uploadZone.classList.add('has');
-    $('btnAnalyze').disabled=false;hideErr('uploadError');
-    state.photoBase64=e.target.result;
-  };
-  reader.readAsDataURL(file);
+async function analyze(){
+  if(!S.photoB64)return;showScr('an');startLd('anMsg',anMsgs);
+  var prompt='Você é um VISAGISTA PROFISSIONAL brasileiro renomado com 25 anos de experiência. Analise esta foto com olhar clínico de visagismo e retorne APENAS JSON puro (sem texto, sem markdown):\n'+
+  '{\n'+
+  '  "nota_beleza":{\n'+
+  '    "geral":7.5,\n'+
+  '    "harmonia_rosto_cabelo":8.0,\n'+
+  '    "saude_capilar":6.0,\n'+
+  '    "coloracao":7.0,\n'+
+  '    "estilo":7.0,\n'+
+  '    "potencial":9.0,\n'+
+  '    "comentario":"Frase motivacional sobre o visual atual e potencial"\n'+
+  '  },\n'+
+  '  "rosto":{"formato":"oval/redondo/quadrado/retangular/coração/diamante/triângulo","proporcoes":"desc","pontos_fortes":["..."],"pontos_equilibrar":["..."]},\n'+
+  '  "pele":{"tom":"claro/médio/escuro","subtom":"quente/frio/neutro","estacao":"primavera/verão/outono/inverno"},\n'+
+  '  "cabelo":{"tipo":"liso/ondulado/cacheado/crespo","subtipo":"1A-4C","textura":"fina/média/grossa","densidade":"baixa/média/alta","porosidade":"baixa/média/alta","condicao":"desc","cor_atual":"desc","comprimento":"curto/médio/longo"},\n'+
+  '  "harmonia":"análise completa de harmonia visual atual",\n'+
+  '  "cortes_ideais":[{"nome":"...","descricao":"...","porque":"razão de visagismo"}],\n'+
+  '  "cores_ideais":[{"nome":"...","descricao":"...","porque":"razão de coloração pessoal"}],\n'+
+  '  "estilos":[{"nome":"...","descricao":"como alcançar"}],\n'+
+  '  "descricao_visual_futuro":"Descrição DETALHADA e visual de como a pessoa ficaria com o corte e cor ideais. Descreva cabelo, cor, estilo, comprimento. Esta descrição será usada para gerar uma imagem.",\n'+
+  '  "insights":["insight profissional 1","insight 2","insight 3"],\n'+
+  '  "atencao":["ponto de atenção"]\n'+
+  '}\n'+
+  'Dê notas honestas (não inflacione). 4-5 cortes, 3-4 cores, 3-4 estilos. Seja específico.';
+
+  var msgs=[{role:'user',content:[{type:'text',text:prompt},{type:'image_url',image_url:{url:S.photoB64}}]}];
+  var result=await callAPI(msgs,null,null,function(err){stopLd();showScr('upload');showErr('uErr','Erro: '+err)});
+  stopLd();if(!result)return;
+  var data=parseJSON(result);
+  if(data){S.analysis=data;store.set('analysis',data);renderReport();showScr('rpt')}
+  else{showScr('upload');showErr('uErr','Análise falhou. Tente outra foto.')}
 }
 
-/* ═══════ VISAGIST ANALYSIS ═══════ */
-var analyzeMessages=['Analisando formato do rosto','Avaliando tom de pele e coloração','Identificando tipo do cabelo','Medindo proporções faciais','Verificando harmonia visual','Preparando recomendações de corte'];
+/* ═══ Future Look ═══ */
+async function genFutureLook(){
+  var box=$('baBox');
+  if(!S.analysis||!S.photoB64)return;
+  var desc=S.analysis.descricao_visual_futuro||'';
+  if(!desc){box.innerHTML='';return}
 
-async function analyzeHair(){
-  if(!state.photoBase64)return;
-  showScr('analyzing');
-  startLd('analyzingMsg',analyzeMessages);
+  box.innerHTML='<div class="ba-card"><div class="ba-h"><i class="fas fa-wand-magic-sparkles" style="color:var(--ac);margin-right:6px"></i>Prévia Visual</div><div class="ba-loading"><div class="ldo" style="width:50px;height:50px"><i class="fas fa-image" style="font-size:18px"></i></div><div style="font-size:13px;color:var(--txm)">Gerando visualização...</div></div></div>';
 
-  var prompt='Você é um VISAGISTA PROFISSIONAL brasileiro com 25 anos de experiência em consultoria de imagem e beleza. '+
-    'Analise esta foto considerando TODOS os aspectos do visagismo profissional e retorne APENAS um objeto JSON puro (sem texto, sem markdown, sem explicação) com esta estrutura EXATA:\n'+
-    '{\n'+
-    '  "rosto": {\n'+
-    '    "formato": "oval/redondo/quadrado/retangular/coração/diamante/triângulo/oblongo",\n'+
-    '    "proporcoes": "descrição das proporções faciais",\n'+
-    '    "pontos_fortes": ["ponto forte 1", "ponto forte 2"],\n'+
-    '    "pontos_equilibrar": ["o que equilibrar 1", "o que equilibrar 2"]\n'+
-    '  },\n'+
-    '  "pele": {\n'+
-    '    "tom": "claro/médio/escuro",\n'+
-    '    "subtom": "quente/frio/neutro",\n'+
-    '    "estacao": "primavera/verão/outono/inverno"\n'+
-    '  },\n'+
-    '  "cabelo": {\n'+
-    '    "tipo": "liso/ondulado/cacheado/crespo",\n'+
-    '    "subtipo": "1A a 4C",\n'+
-    '    "textura": "fina/média/grossa",\n'+
-    '    "densidade": "baixa/média/alta",\n'+
-    '    "porosidade": "baixa/média/alta",\n'+
-    '    "condicao": "descrição da condição",\n'+
-    '    "cor_atual": "cor do cabelo",\n'+
-    '    "comprimento": "curto/médio/longo"\n'+
-    '  },\n'+
-    '  "harmonia": "análise de como o visual atual harmoniza com o rosto, tom de pele e estilo",\n'+
-    '  "cortes_ideais": [\n'+
-    '    {"nome": "Nome", "descricao": "desc", "porque": "explicação de visagismo"}\n'+
-    '  ],\n'+
-    '  "cores_ideais": [\n'+
-    '    {"nome": "Nome da cor", "descricao": "desc", "porque": "explicação baseada na coloração pessoal"}\n'+
-    '  ],\n'+
-    '  "estilos": [\n'+
-    '    {"nome": "Estilo", "descricao": "como alcançar"}\n'+
-    '  ],\n'+
-    '  "insights_visagista": ["insight profissional 1", "insight 2", "insight 3"],\n'+
-    '  "atencao": ["ponto de atenção 1"]\n'+
-    '}\n'+
-    'Dê 4-5 cortes ideais, 3-4 cores ideais, 3-4 estilos. Seja específico e profissional.';
+  var prompt='Edite esta foto para mostrar a pessoa com estas mudanças de cabelo: '+desc+'. Mantenha o rosto EXATAMENTE igual, mude APENAS o cabelo (corte, cor, estilo). Resultado natural e realista. Não adicione texto na imagem.';
+  var msgs=[{role:'user',content:[{type:'text',text:prompt},{type:'image_url',image_url:{url:S.photoB64}}]}];
+  var result=await callAPI(msgs,null,null,function(){
+    box.innerHTML='<div class="ba-card"><div class="ba-h"><i class="fas fa-eye" style="color:var(--ac);margin-right:6px"></i>Como Você Ficaria</div><div class="ba-desc"><strong>Visualização do visagista:</strong> '+desc+'</div></div>';
+  },S.imgModel);
 
-  var messages=[{
-    role:'user',
-    content:[
-      {type:'text',text:prompt},
-      {type:'image_url',image_url:{url:state.photoBase64}}
-    ]
-  }];
+  if(!result){
+    box.innerHTML='<div class="ba-card"><div class="ba-h"><i class="fas fa-eye" style="color:var(--ac);margin-right:6px"></i>Como Você Ficaria</div><div class="ba-desc"><strong>Visualização do visagista:</strong> '+desc+'</div></div>';
+    return;
+  }
 
-  var result=await callAPI(messages,null,null,function(err){
-    stopLd();showScr('upload');showErr('uploadError','Erro na análise: '+err);
-  });
-
-  stopLd();
-  if(!result)return;
-
-  var data=parseBotJSON(result);
-  if(data){
-    state.analysis=data;
-    store.set('analysis',data);
-    renderReport();
-    showScr('report');
+  var imgUrl=extractImgUrl(result);
+  if(imgUrl){
+    box.innerHTML='<div class="ba-card"><div class="ba-h"><i class="fas fa-wand-magic-sparkles" style="color:var(--ac);margin-right:6px"></i>Antes & Depois</div><div class="ba-sub">Como você ficaria seguindo as recomendações</div><div class="ba-grid"><div class="ba-img-wrap"><img src="'+S.photoB64+'" alt="Antes"><div class="ba-label">Agora</div></div><div class="ba-img-wrap"><img src="'+imgUrl+'" alt="Depois"><div class="ba-label">Futuro</div></div></div><div class="ba-desc"><strong>Visão do visagista:</strong> '+desc+'</div></div>';
   }else{
-    showScr('upload');
-    showErr('uploadError','Não foi possível interpretar a análise. Tente outra foto ou outro modelo.');
+    box.innerHTML='<div class="ba-card"><div class="ba-h"><i class="fas fa-eye" style="color:var(--ac);margin-right:6px"></i>Como Você Ficaria</div><div class="ba-desc"><strong>Visualização do visagista:</strong> '+desc+'</div></div>';
   }
 }
 
-/* ═══════ RENDER REPORT ═══════ */
+/* ═══ Render Report ═══ */
 function renderReport(){
-  var a=state.analysis;
-  var c=$('reportContainer');
-  var html='';
+  var a=S.analysis,h='';
 
-  /* Face shape */
-  var face=a.rosto||{};
-  html+='<div class="rpt-section"><div class="rpt-card">';
-  html+='<div class="rpt-head"><div class="rpt-icon face"><i class="fas fa-face-smile"></i></div><div><div class="rpt-h3">Análise do Rosto</div></div><div class="rpt-badge">'+(face.formato||'—')+'</div></div>';
-  html+='<p style="font-size:14px;color:var(--text-sec);line-height:1.6">'+(face.proporcoes||'')+'</p>';
-  html+='<div class="rpt-grid">';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Pontos Fortes</div>';
-  if(face.pontos_fortes&&face.pontos_fortes.length){face.pontos_fortes.forEach(function(p){html+='<div style="font-size:13px;color:var(--success);margin-top:3px"><i class="fas fa-check" style="font-size:10px;margin-right:4px"></i>'+p+'</div>'})}
-  html+='</div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Para Equilibrar</div>';
-  if(face.pontos_equilibrar&&face.pontos_equilibrar.length){face.pontos_equilibrar.forEach(function(p){html+='<div style="font-size:13px;color:var(--warning);margin-top:3px"><i class="fas fa-arrow-right" style="font-size:10px;margin-right:4px"></i>'+p+'</div>'})}
-  html+='</div></div>';
-  html+='</div></div>';
+  /* Score */
+  var nb=a.nota_beleza||{};
+  var g=nb.geral||0,pot=nb.potencial||0;
+  var pct=Math.round(g*10);
+  var bars=[{l:'Harmonia',v:nb.harmonia_rosto_cabelo||0},{l:'Saúde capilar',v:nb.saude_capilar||0},{l:'Coloração',v:nb.coloracao||0},{l:'Estilo',v:nb.estilo||0},{l:'Potencial',v:pot}];
 
-  /* Skin / color */
-  var pele=a.pele||{};
-  html+='<div class="rpt-section"><div class="rpt-card">';
-  html+='<div class="rpt-head"><div class="rpt-icon color"><i class="fas fa-palette"></i></div><div><div class="rpt-h3">Coloração Pessoal</div></div></div>';
-  html+='<div class="rpt-grid">';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Tom de Pele</div><div class="rpt-mini-val">'+(pele.tom||'—')+'</div></div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Subtom</div><div class="rpt-mini-val">'+(pele.subtom||'—')+'</div></div>';
-  html+='<div class="rpt-mini" style="grid-column:span 2"><div class="rpt-mini-label">Estação</div><div class="rpt-mini-val" style="font-size:17px">'+(pele.estacao||'—')+'</div></div>';
-  html+='</div></div></div>';
+  h+='<div class="score-wrap"><div class="score-ring" id="sRing"><div class="score-bg" id="sBg" style="background:conic-gradient(var(--bd) 0deg, var(--bd) 360deg)"></div><div class="score-inner"><div class="score-num" id="sNum" style="color:'+scoreColor(g)+'">0</div><div class="score-of">de 10</div></div></div>';
+  if(nb.comentario)h+='<div class="score-comment">'+nb.comentario+'</div>';
+  h+='<div class="score-bars">';
+  bars.forEach(function(b){h+='<div class="score-row"><div class="score-row-l">'+b.l+'</div><div class="score-bar"><div class="score-bar-f" data-w="'+Math.round(b.v*10)+'" style="background:'+scoreColor(b.v)+'"></div></div><div class="score-row-v" style="color:'+scoreColor(b.v)+'">'+b.v.toFixed(1)+'</div></div>'});
+  h+='</div>';
+  if(pot>g)h+='<div class="score-pot"><span style="color:var(--txm)">Agora: <strong style="color:'+scoreColor(g)+'">'+g.toFixed(1)+'</strong></span><span class="arr"><i class="fas fa-arrow-right"></i></span><span style="color:var(--txm)">Potencial: <strong style="color:'+scoreColor(pot)+'">'+pot.toFixed(1)+'</strong></span></div>';
+  h+='</div>';
+
+  /* Before/after placeholder */
+  var baHTML='';
+  if(a.descricao_visual_futuro){
+    baHTML='<div class="ba-card" id="baCard"><div class="ba-h"><i class="fas fa-wand-magic-sparkles" style="color:var(--ac);margin-right:6px"></i>Prévia Visual</div><div class="ba-sub">Veja como você ficaria seguindo as recomendações do visagista</div><button class="btn bp" id="btnBA" style="margin:0 auto"><i class="fas fa-image"></i> Gerar visualização</button><div class="ba-desc"><strong>Descrição:</strong> '+a.descricao_visual_futuro+'</div></div>';
+  }
+
+  /* Face */
+  var f=a.rosto||{};
+  h+='<div class="rc"><div class="rh"><div class="ri ri-f"><i class="fas fa-face-smile"></i></div><div><div class="r3">Rosto</div></div><div class="rbdg">'+(f.formato||'—')+'</div></div>';
+  if(f.proporcoes)h+='<p style="font-size:13px;color:var(--tx2);line-height:1.5">'+f.proporcoes+'</p>';
+  h+='<div class="rgr"><div class="rm"><div class="rm-l">Pontos Fortes</div>';
+  if(f.pontos_fortes)f.pontos_fortes.forEach(function(p){h+='<div style="font-size:12px;color:var(--ok);margin-top:2px"><i class="fas fa-check" style="font-size:9px;margin-right:3px"></i>'+p+'</div>'});
+  h+='</div><div class="rm"><div class="rm-l">Equilibrar</div>';
+  if(f.pontos_equilibrar)f.pontos_equilibrar.forEach(function(p){h+='<div style="font-size:12px;color:var(--warn);margin-top:2px"><i class="fas fa-arrow-right" style="font-size:9px;margin-right:3px"></i>'+p+'</div>'});
+  h+='</div></div></div>';
+
+  /* Skin */
+  var sk=a.pele||{};
+  h+='<div class="rc"><div class="rh"><div class="ri ri-c"><i class="fas fa-palette"></i></div><div><div class="r3">Coloração Pessoal</div></div></div><div class="rgr"><div class="rm"><div class="rm-l">Tom</div><div class="rm-v">'+(sk.tom||'—')+'</div></div><div class="rm"><div class="rm-l">Subtom</div><div class="rm-v">'+(sk.subtom||'—')+'</div></div><div class="rm" style="grid-column:span 2"><div class="rm-l">Estação</div><div class="rm-v" style="font-size:16px">'+(sk.estacao||'—')+'</div></div></div></div>';
 
   /* Hair */
-  var cab=a.cabelo||{};
-  html+='<div class="rpt-section"><div class="rpt-card">';
-  html+='<div class="rpt-head"><div class="rpt-icon hair"><i class="fas fa-seedling"></i></div><div><div class="rpt-h3">Análise Capilar</div></div><div class="rpt-badge">'+(cab.tipo||'')+' '+(cab.subtipo||'')+'</div></div>';
-  html+='<div class="rpt-grid">';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Textura</div><div class="rpt-mini-val">'+(cab.textura||'—')+'</div></div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Densidade</div><div class="rpt-mini-val">'+(cab.densidade||'—')+'</div></div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Porosidade</div><div class="rpt-mini-val">'+(cab.porosidade||'—')+'</div></div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Comprimento</div><div class="rpt-mini-val">'+(cab.comprimento||'—')+'</div></div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Cor Atual</div><div class="rpt-mini-val">'+(cab.cor_atual||'—')+'</div></div>';
-  html+='<div class="rpt-mini"><div class="rpt-mini-label">Condição</div><div class="rpt-mini-val">'+(cab.condicao||'—')+'</div></div>';
-  html+='</div></div></div>';
+  var cb=a.cabelo||{};
+  h+='<div class="rc"><div class="rh"><div class="ri ri-h"><i class="fas fa-seedling"></i></div><div><div class="r3">Cabelo</div></div><div class="rbdg">'+(cb.tipo||'')+' '+(cb.subtipo||'')+'</div></div><div class="rgr">';
+  [{l:'Textura',v:cb.textura},{l:'Densidade',v:cb.densidade},{l:'Porosidade',v:cb.porosidade},{l:'Comprimento',v:cb.comprimento},{l:'Cor Atual',v:cb.cor_atual},{l:'Condição',v:cb.condicao}].forEach(function(x){h+='<div class="rm"><div class="rm-l">'+x.l+'</div><div class="rm-v">'+(x.v||'—')+'</div></div>'});
+  h+='</div></div>';
 
   /* Harmony */
-  if(a.harmonia){
-    html+='<div class="rpt-section"><div class="rpt-card">';
-    html+='<div class="rpt-head"><div class="rpt-icon harmony"><i class="fas fa-yin-yang"></i></div><div><div class="rpt-h3">Harmonia Visual</div></div></div>';
-    html+='<p style="font-size:14px;color:var(--text-sec);line-height:1.7">'+a.harmonia+'</p>';
-    html+='</div></div>';
-  }
+  if(a.harmonia)h+='<div class="rc"><div class="rh"><div class="ri ri-y"><i class="fas fa-yin-yang"></i></div><div><div class="r3">Harmonia Visual</div></div></div><p style="font-size:13px;color:var(--tx2);line-height:1.6">'+a.harmonia+'</p></div>';
 
-  /* Cut recommendations */
-  if(a.cortes_ideais&&a.cortes_ideais.length){
-    html+='<div class="rpt-section">';
-    html+='<h3 class="sec-head"><i class="fas fa-scissors"></i> Cortes Ideais para Seu Rosto</h3>';
-    a.cortes_ideais.forEach(function(ct){
-      html+='<div class="rec-card"><i class="fas fa-chevron-right"></i><div><div class="rec-name">'+(ct.nome||'')+'</div><div class="rec-desc">'+(ct.descricao||'')+'</div>';
-      if(ct.porque)html+='<div class="rec-why"><i class="fas fa-wand-magic-sparkles" style="margin-right:4px;font-size:11px"></i>'+ct.porque+'</div>';
-      html+='</div></div>';
-    });
-    html+='</div>';
-  }
+  /* Cuts */
+  if(a.cortes_ideais&&a.cortes_ideais.length){h+='<h3 class="sh"><i class="fas fa-scissors"></i> Cortes Ideais</h3>';a.cortes_ideais.forEach(function(c){h+='<div class="recc"><i class="fas fa-chevron-right"></i><div><div class="recn">'+(c.nome||'')+'</div><div class="recd">'+(c.descricao||'')+'</div>'+(c.porque?'<div class="recw"><i class="fas fa-wand-magic-sparkles" style="font-size:10px;margin-right:3px"></i>'+c.porque+'</div>':'')+'</div></div>'})}
 
-  /* Color recommendations */
-  if(a.cores_ideais&&a.cores_ideais.length){
-    html+='<div class="rpt-section">';
-    html+='<h3 class="sec-head"><i class="fas fa-swatchbook"></i> Cores Ideais para Sua Coloração</h3>';
-    a.cores_ideais.forEach(function(cr){
-      html+='<div class="rec-card"><i class="fas fa-droplet"></i><div><div class="rec-name">'+(cr.nome||'')+'</div><div class="rec-desc">'+(cr.descricao||'')+'</div>';
-      if(cr.porque)html+='<div class="rec-why"><i class="fas fa-palette" style="margin-right:4px;font-size:11px"></i>'+cr.porque+'</div>';
-      html+='</div></div>';
-    });
-    html+='</div>';
-  }
+  /* Colors */
+  if(a.cores_ideais&&a.cores_ideais.length){h+='<h3 class="sh" style="margin-top:16px"><i class="fas fa-swatchbook"></i> Cores Ideais</h3>';a.cores_ideais.forEach(function(c){h+='<div class="recc"><i class="fas fa-droplet"></i><div><div class="recn">'+(c.nome||'')+'</div><div class="recd">'+(c.descricao||'')+'</div>'+(c.porque?'<div class="recw"><i class="fas fa-palette" style="font-size:10px;margin-right:3px"></i>'+c.porque+'</div>':'')+'</div></div>'})}
 
   /* Styles */
-  if(a.estilos&&a.estilos.length){
-    html+='<div class="rpt-section">';
-    html+='<h3 class="sec-head"><i class="fas fa-gem"></i> Estilos Sugeridos</h3>';
-    a.estilos.forEach(function(st){
-      html+='<div class="rec-card"><i class="fas fa-star"></i><div><div class="rec-name">'+(st.nome||'')+'</div><div class="rec-desc">'+(st.descricao||'')+'</div></div></div>';
-    });
-    html+='</div>';
-  }
+  if(a.estilos&&a.estilos.length){h+='<h3 class="sh" style="margin-top:16px"><i class="fas fa-gem"></i> Estilos</h3>';a.estilos.forEach(function(s){h+='<div class="recc"><i class="fas fa-star"></i><div><div class="recn">'+(s.nome||'')+'</div><div class="recd">'+(s.descricao||'')+'</div></div></div>'})}
 
-  /* Visagist insights */
-  if(a.insights_visagista&&a.insights_visagista.length){
-    html+='<div class="rpt-section"><div class="rpt-card">';
-    html+='<div class="rpt-head"><div class="rpt-icon" style="background:rgba(90,120,180,.12);color:#5A78B4"><i class="fas fa-brain"></i></div><div><div class="rpt-h3">Insights do Visagista</div></div></div>';
-    html+='<ul class="rpt-list">';
-    a.insights_visagista.forEach(function(i){html+='<li>'+i+'</li>'});
-    html+='</ul></div></div>';
-  }
+  /* Insights */
+  if(a.insights&&a.insights.length){h+='<div class="rc" style="margin-top:16px"><div class="rh"><div class="ri ri-s"><i class="fas fa-brain"></i></div><div><div class="r3">Insights do Visagista</div></div></div><ul class="rl">';a.insights.forEach(function(i){h+='<li>'+i+'</li>'});h+='</ul></div>'}
+  if(a.atencao&&a.atencao.length){h+='<div class="rc" style="border-color:var(--warn);background:var(--warn-bg)"><div class="rh"><div class="ri" style="background:var(--warn-bg);color:var(--warn)"><i class="fas fa-triangle-exclamation"></i></div><div><div class="r3" style="color:var(--warn)">Atenção</div></div></div><ul class="rl">';a.atencao.forEach(function(x){h+='<li>'+x+'</li>'});h+='</ul></div>'}
 
-  /* Attention */
-  if(a.atencao&&a.atencao.length){
-    html+='<div class="rpt-section"><div class="rpt-card" style="border-color:var(--warning);background:var(--warning-bg)">';
-    html+='<div class="rpt-head"><div class="rpt-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="fas fa-triangle-exclamation"></i></div><div><div class="rpt-h3" style="color:var(--warning)">Pontos de Atenção</div></div></div>';
-    html+='<ul class="rpt-list">';
-    a.atencao.forEach(function(at){html+='<li>'+at+'</li>'});
-    html+='</ul></div></div>';
-  }
+  $('scoreBox').innerHTML='';
+  $('baBox').innerHTML=baHTML;
+  $('rptBox').innerHTML=h;
 
-  c.innerHTML=html;
+  /* Animate score */
+  setTimeout(function(){
+    animateScore(g);
+    document.querySelectorAll('.score-bar-f').forEach(function(el){el.style.width=el.getAttribute('data-w')+'%'});
+  },300);
+
+  /* BA button */
+  var baBtn=$('btnBA');
+  if(baBtn)baBtn.addEventListener('click',function(){genFutureLook()});
 }
 
-/* ═══════ GENERATE CARE PLAN ═══════ */
-var genMessages=['Montando sua rotina semanal','Selecionando produtos ideais','Definindo frequência de lavagem','Personalizando dicas','Finalizando calendário'];
+function animateScore(target){
+  var num=$('sNum'),bg=$('sBg');if(!num||!bg)return;
+  var cur=0,step=target/40;
+  var iv=setInterval(function(){
+    cur+=step;if(cur>=target){cur=target;clearInterval(iv)}
+    num.textContent=cur.toFixed(1);
+    var deg=Math.round(cur*36);
+    bg.style.background='conic-gradient('+scoreColor(cur)+' '+deg+'deg, var(--bd) '+deg+'deg)';
+  },30);
+}
 
-async function generatePlan(){
-  var desire=$('inpDesire').value.trim();
-  var ref=$('inpRef').value.trim();
-  var freq=$('inpFreq').value;
-  var pris=[];
-  var chips=document.querySelectorAll('.pri-chip input:checked');
-  for(var i=0;i<chips.length;i++) pris.push(chips[i].value);
+/* ═══ Generate plan ═══ */
+var genMsgs=['Montando rotina semanal','Listando produtos necessários','Calculando frequências ideais','Criando lista de compras','Finalizando plano'];
 
-  state.preferences={desire:desire,reference:ref,frequency:freq,priorities:pris};
-  store.set('preferences',state.preferences);
+async function genPlan(){
+  var des=$('iDes').value.trim(),ref=$('iRef').value.trim(),frq=$('iFrq').value,pris=[];
+  document.querySelectorAll('.pchip input:checked').forEach(function(c){pris.push(c.value)});
+  S.prefs={desire:des,reference:ref,frequency:frq,priorities:pris};store.set('prefs',S.prefs);
+  showScr('gen');startLd('genMsg',genMsgs);
 
-  showScr('generating');
-  startLd('genMsg',genMessages);
+  var prompt='Você é VISAGISTA PROFISSIONAL. Crie plano semanal completo COM LISTA DE COMPRAS.\n\nANÁLISE:\n'+JSON.stringify(S.analysis,null,2)+'\n\nPREFERÊNCIAS:\n- Desejo: '+(des||'—')+'\n- Referência: '+(ref||'—')+'\n- Lavagem: '+(frq||'—')+'\n- Prioridades: '+(pris.join(', ')||'—')+'\n\n'+
+  'Retorne APENAS JSON puro:\n'+
+  '{\n'+
+  '  "resumo":"Resumo motivacional do plano (2-3 frases)",\n'+
+  '  "desafio_semanal":"Um desafio divertido e específico para a semana",\n'+
+  '  "meta_mes":"Meta principal para o mês",\n'+
+  '  "dias":{\n'+
+  '    "segunda":{"rotina_manha":[{"tarefa":"nome","detalhes":"como fazer","duracao":"Xmin"}],"rotina_noite":[...]},\n'+
+  '    "terca":{...},"quarta":{...},"quinta":{...},"sexta":{...},"sabado":{...},"domingo":{...}\n'+
+  '  },\n'+
+  '  "lista_compras":[\n'+
+  '    {"categoria":"Lavagem","icone":"soap","itens":[{"produto":"nome","descricao":"para que serve","prioridade":"essencial/recomendado/opcional","faixa_preco":"R$XX-XX"}]},\n'+
+  '    {"categoria":"Tratamento","icone":"flask","itens":[...]},\n'+
+  '    {"categoria":"Finalização","icone":"spray-can","itens":[...]},\n'+
+  '    {"categoria":"Ferramentas","icone":"comb","itens":[...]}\n'+
+  '  ],\n'+
+  '  "dicas":["dica 1","dica 2","dica 3"],\n'+
+  '  "evitar":["evitar 1","evitar 2"]\n'+
+  '}\n'+
+  'Dias sem acento (segunda,terca,quarta,quinta,sexta,sabado,domingo). 1-3 tarefas manhã/noite por dia. Lista de compras organizada com preços realistas em reais. Prioridade: essencial=indispensável, recomendado=importante, opcional=diferencial.';
 
-  var prompt='Você é um VISAGISTA PROFISSIONAL brasileiro. Com base na análise visagista e preferências, crie um plano semanal COMPLETO de cuidados capilares.\n\n'+
-    'ANÁLISE VISAGISTA:\n'+JSON.stringify(state.analysis,null,2)+'\n\n'+
-    'PREFERÊNCIAS:\n'+
-    '- Desejo: '+(desire||'não especificado')+'\n'+
-    '- Referência: '+(ref||'nenhuma')+'\n'+
-    '- Lavagem atual: '+(freq||'não informado')+'\n'+
-    '- Prioridades: '+(pris.length?pris.join(', '):'não especificadas')+'\n\n'+
-    'Retorne APENAS JSON puro (sem texto, sem markdown) com esta estrutura:\n'+
-    '{\n'+
-    '  "resumo": "Resumo motivacional do plano em 2-3 frases, mencionando o formato do rosto e tipo de cabelo",\n'+
-    '  "dias": {\n'+
-    '    "segunda": {\n'+
-    '      "rotina_manha": [{"tarefa": "nome", "detalhes": "como fazer", "duracao": "Xmin"}],\n'+
-    '      "rotina_noite": [{"tarefa": "nome", "detalhes": "como fazer", "duracao": "Xmin"}]\n'+
-    '    },\n'+
-    '    "terca": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
-    '    "quarta": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
-    '    "quinta": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
-    '    "sexta": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
-    '    "sabado": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
-    '    "domingo": {"rotina_manha":[...],"rotina_noite":[...]}\n'+
-    '  },\n'+
-    '  "produtos": [\n'+
-    '    {"tipo": "tipo", "sugestao": "desc", "frequencia": "freq", "motivo": "motivo"}\n'+
-    '  ],\n'+
-    '  "dicas": ["dica 1", "dica 2", "dica 3", "dica 4"],\n'+
-    '  "evitar": ["coisa 1", "coisa 2"]\n'+
-    '}\n'+
-    'Use nomes de dias sem acento: segunda, terca, quarta, quinta, sexta, sabado, domingo. Tarefas devem ser específicas para este tipo de cabelo e formato de rosto. Inclua pelo menos 1-2 tarefas manhã e 1-2 noite para cada dia.';
+  var result=await callAPI([{role:'user',content:prompt}],null,null,function(err){stopLd();showScr('rpt');showErr('pErr','Erro: '+err)});
+  stopLd();if(!result)return;
+  var data=parseJSON(result);
+  if(data){S.plan=data;store.set('plan',data);renderPlan();showScr('plan')}
+  else{showScr('rpt');showErr('pErr','Falha ao gerar plano. Tente novamente.')}
+}
 
-  var messages=[{role:'user',content:prompt}];
-  var result=await callAPI(messages,null,null,function(err){
-    stopLd();showScr('report');showErr('prefsError','Erro ao gerar plano: '+err);
-  });
+/* ═══ Render Plan ═══ */
+var dayL={segunda:'Segunda-feira',terca:'Terça-feira',quarta:'Quarta-feira',quinta:'Quinta-feira',sexta:'Sexta-feira',sabado:'Sábado',domingo:'Domingo'};
+var dayO=['segunda','terca','quarta','quinta','sexta','sabado','domingo'];
 
-  stopLd();
-  if(!result)return;
+function renderPlan(){
+  var p=S.plan;
+  $('planSum').textContent=p.resumo||'';
 
-  var data=parseBotJSON(result);
-  if(data){
-    state.carePlan=data;
-    store.set('carePlan',data);
-    renderCalendar();
-    showScr('calendar');
-  }else{
-    showScr('report');
-    showErr('prefsError','Não foi possível gerar o plano. Tente novamente.');
+  /* Challenge */
+  var ch='';
+  if(p.desafio_semanal||p.meta_mes){
+    ch='<div class="challenge"><i class="fas fa-trophy"></i>';
+    if(p.desafio_semanal)ch+='<h4><i class="fas fa-fire" style="color:var(--err);margin-right:4px"></i>Desafio da Semana</h4><p>'+p.desafio_semanal+'</p>';
+    if(p.meta_mes)ch+='<div style="margin-top:10px;font-size:12px;color:var(--txm)"><i class="fas fa-bullseye" style="margin-right:4px"></i>Meta do mês: '+p.meta_mes+'</div>';
+    ch+='</div>';
   }
-}
+  $('challengeBox').innerHTML=ch;
 
-/* ═══════ RENDER CALENDAR ═══════ */
-var dayLabels={segunda:'Segunda-feira',terca:'Terça-feira',quarta:'Quarta-feira',quinta:'Quinta-feira',sexta:'Sexta-feira',sabado:'Sábado',domingo:'Domingo'};
-var dayOrder=['segunda','terca','quarta','quinta','sexta','sabado','domingo'];
-
-function renderCalendar(){
-  var plan=state.carePlan;
-  $('planSum').textContent=plan.resumo||'';
-
-  var grid=$('calGrid');var html='';
-  dayOrder.forEach(function(dk){
-    var dd=plan.dias&&plan.dias[dk];if(!dd)return;
-    var mT=dd.rotina_manha||[];var nT=dd.rotina_noite||[];var total=mT.length+nT.length;
-    html+='<div class="day-c">';
-    html+='<div class="day-h" data-day="'+dk+'"><i class="fas fa-chevron-right"></i> <span>'+(dayLabels[dk]||dk)+'</span><span class="day-badge">'+total+' tarefa'+(total!==1?'s':'')+'</span></div>';
-    html+='<div class="day-body" id="dayB-'+dk+'">';
-    if(mT.length){
-      html+='<div class="rt-sec"><div class="rt-lbl"><i class="fas fa-sun"></i> Manhã</div>';
-      mT.forEach(function(t,i){html+=mkTask(dk,'m',i,t)});
-      html+='</div>';
-    }
-    if(nT.length){
-      html+='<div class="rt-sec"><div class="rt-lbl"><i class="fas fa-moon"></i> Noite</div>';
-      nT.forEach(function(t,i){html+=mkTask(dk,'n',i,t)});
-      html+='</div>';
-    }
-    html+='</div></div>';
-  });
-  grid.innerHTML=html;
-
-  /* expand first day */
-  var fh=grid.querySelector('.day-h');
-  if(fh)togDay(fh.getAttribute('data-day'));
-
-  /* day toggles */
-  grid.querySelectorAll('.day-h').forEach(function(h){
-    h.addEventListener('click',function(){togDay(h.getAttribute('data-day'))});
-  });
-
-  /* task checks */
-  grid.querySelectorAll('.tk-chk').forEach(function(ch){
-    ch.addEventListener('click',function(){
-      ch.classList.toggle('ck');
-      var nm=ch.parentElement.querySelector('.tk-name');
-      if(nm)nm.classList.toggle('dn');
-    });
-  });
-
-  /* products */
-  var pb=$('prodsBox');
-  if(plan.produtos&&plan.produtos.length){
-    var ph='<div style="margin-bottom:24px"><h3 class="sec-head"><i class="fas fa-pump-soap"></i> Produtos Recomendados</h3>';
-    plan.produtos.forEach(function(p){
-      ph+='<div class="prod-card"><div class="prod-type">'+(p.tipo||'')+'</div><div class="prod-name">'+(p.sugestao||'')+'</div><div class="prod-meta">'+(p.frequencia?'<i class="fas fa-clock"></i> '+p.frequencia:'')+(p.motivo?' · '+p.motivo:'')+'</div></div>';
-    });
-    ph+='</div>';pb.innerHTML=ph;
-  }else{pb.innerHTML=''}
-
-  /* tips */
-  var tb=$('tipsBox');
-  if(plan.dicas&&plan.dicas.length){
-    tb.innerHTML='<div style="margin-bottom:24px"><h3 class="sec-head"><i class="fas fa-lightbulb"></i> Dicas do Visagista</h3>'+
-      plan.dicas.map(function(d){return '<div class="tip-i"><i class="fas fa-check-circle"></i><span>'+d+'</span></div>'}).join('')+'</div>';
-  }else{tb.innerHTML=''}
-
-  /* avoid */
-  var ab=$('avoidBox');
-  if(plan.evitar&&plan.evitar.length){
-    ab.innerHTML='<div style="margin-bottom:24px"><h3 class="sec-head"><i class="fas fa-ban"></i> Evitar</h3>'+
-      plan.evitar.map(function(a){return '<div class="avoid-i"><i class="fas fa-times-circle"></i><span>'+a+'</span></div>'}).join('')+'</div>';
-  }else{ab.innerHTML=''}
-}
-
-function mkTask(day,per,idx,t){
-  return '<div class="tk-item">'+
-    '<div class="tk-chk"><i class="fas fa-check"></i></div>'+
-    '<div class="tk-info"><div class="tk-name">'+(t.tarefa||'')+'</div><div class="tk-det">'+(t.detalhes||'')+'</div></div>'+
-    (t.duracao?'<div class="tk-dur">'+t.duracao+'</div>':'')+
-    '</div>';
-}
-
-function togDay(dk){
-  var body=$('dayB-'+dk);var hdr=document.querySelector('.day-h[data-day="'+dk+'"]');
-  if(!body||!hdr)return;
-  body.classList.toggle('op');hdr.classList.toggle('exp');
-}
-
-/* ═══════ EXPORT ═══════ */
-function exportPlan(){
-  if(!state.carePlan||!state.analysis)return;
-  var a=state.analysis;var p=state.carePlan;var L=[];
-  L.push('MADEIXA — RELATÓRIO VISAGISTA E RITUAL CAPILAR');
-  L.push('═'.repeat(50));L.push('');
-
-  L.push('ANÁLISE DO ROSTO');L.push('─'.repeat(50));
-  var f=a.rosto||{};
-  L.push('Formato: '+(f.formato||'—'));
-  L.push('Proporções: '+(f.proporcoes||'—'));
-  if(f.pontos_fortes)L.push('Pontos fortes: '+f.pontos_fortes.join(', '));
-  if(f.pontos_equilibrar)L.push('Equilibrar: '+f.pontos_equilibrar.join(', '));
-  L.push('');
-
-  L.push('COLORAÇÃO PESSOAL');L.push('─'.repeat(50));
-  var sk=a.pele||{};
-  L.push('Tom: '+(sk.tom||'—')+' | Subtom: '+(sk.subtom||'—')+' | Estação: '+(sk.estacao||'—'));
-  L.push('');
-
-  L.push('ANÁLISE CAPILAR');L.push('─'.repeat(50));
-  var cb=a.cabelo||{};
-  L.push('Tipo: '+(cb.tipo||'')+' ('+( cb.subtipo||'')+')');
-  L.push('Textura: '+(cb.textura||'')+' | Densidade: '+(cb.densidade||'')+' | Porosidade: '+(cb.porosidade||''));
-  L.push('Cor: '+(cb.cor_atual||'')+' | Comprimento: '+(cb.comprimento||'')+' | Condição: '+(cb.condicao||''));
-  L.push('');
-
-  if(a.harmonia){L.push('HARMONIA: '+a.harmonia);L.push('')}
-
-  if(a.cortes_ideais&&a.cortes_ideais.length){
-    L.push('CORTES IDEAIS');L.push('─'.repeat(50));
-    a.cortes_ideais.forEach(function(c){L.push('  ✂ '+c.nome+' — '+c.descricao+(c.porque?' ('+c.porque+')':''))});
-    L.push('');
-  }
-  if(a.cores_ideais&&a.cores_ideais.length){
-    L.push('CORES IDEAIS');L.push('─'.repeat(50));
-    a.cores_ideais.forEach(function(c){L.push('  🎨 '+c.nome+' — '+c.descricao+(c.porque?' ('+c.porque+')':''))});
-    L.push('');
-  }
-
-  L.push('');L.push(p.resumo||'');L.push('');
-  L.push('PLANO SEMANAL');L.push('─'.repeat(50));
-  dayOrder.forEach(function(dk){
+  /* Calendar */
+  var grid=$('calGrid'),gh='';
+  dayO.forEach(function(dk){
     var dd=p.dias&&p.dias[dk];if(!dd)return;
-    L.push('');L.push((dayLabels[dk]||dk).toUpperCase());
-    if(dd.rotina_manha&&dd.rotina_manha.length){
-      L.push('  ☀ Manhã:');
-      dd.rotina_manha.forEach(function(t){L.push('    • '+t.tarefa+(t.duracao?' ('+t.duracao+')':''));if(t.detalhes)L.push('      '+t.detalhes)});
-    }
-    if(dd.rotina_noite&&dd.rotina_noite.length){
-      L.push('  🌙 Noite:');
-      dd.rotina_noite.forEach(function(t){L.push('    • '+t.tarefa+(t.duracao?' ('+t.duracao+')':''));if(t.detalhes)L.push('      '+t.detalhes)});
-    }
+    var mT=dd.rotina_manha||[],nT=dd.rotina_noite||[],tot=mT.length+nT.length;
+    gh+='<div class="dc"><div class="dh" data-day="'+dk+'"><i class="fas fa-chevron-right"></i> <span>'+(dayL[dk]||dk)+'</span><span class="dbdg">'+tot+'</span></div><div class="db" id="db-'+dk+'">';
+    if(mT.length){gh+='<div class="rs"><div class="rlb"><i class="fas fa-sun"></i> Manhã</div>';mT.forEach(function(t){gh+=mkTk(t)});gh+='</div>'}
+    if(nT.length){gh+='<div class="rs"><div class="rlb"><i class="fas fa-moon"></i> Noite</div>';nT.forEach(function(t){gh+=mkTk(t)});gh+='</div>'}
+    gh+='</div></div>';
   });
+  grid.innerHTML=gh;
+  var fh=grid.querySelector('.dh');if(fh)togD(fh.getAttribute('data-day'));
+  grid.querySelectorAll('.dh').forEach(function(h){h.addEventListener('click',function(){togD(h.getAttribute('data-day'))})});
+  grid.querySelectorAll('.tc').forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('ck');var n=c.parentElement.querySelector('.tn');if(n)n.classList.toggle('dn')})});
 
-  if(p.produtos&&p.produtos.length){L.push('');L.push('PRODUTOS');L.push('─'.repeat(50));p.produtos.forEach(function(pr){L.push('  '+pr.tipo+': '+pr.sugestao+(pr.frequencia?' — '+pr.frequencia:''))})}
-  if(p.dicas&&p.dicas.length){L.push('');L.push('DICAS');L.push('─'.repeat(50));p.dicas.forEach(function(d){L.push('  ✓ '+d)})}
-  if(p.evitar&&p.evitar.length){L.push('');L.push('EVITAR');L.push('─'.repeat(50));p.evitar.forEach(function(v){L.push('  ✗ '+v)})}
-  L.push('');L.push('─'.repeat(50));L.push('Gerado por madeixa — visagismo inteligente');
+  /* Tips / Avoid */
+  var tb=$('tipsBox'),ab=$('avoidBox');
+  tb.innerHTML=p.dicas&&p.dicas.length?'<div style="margin-top:18px"><h3 class="sh"><i class="fas fa-lightbulb"></i> Dicas</h3>'+p.dicas.map(function(d){return '<div class="tip-i" style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13px;color:var(--tx2)"><i class="fas fa-check-circle" style="color:var(--ok);margin-top:2px"></i><span>'+d+'</span></div>'}).join('')+'</div>':'';
+  ab.innerHTML=p.evitar&&p.evitar.length?'<div style="margin-top:14px"><h3 class="sh"><i class="fas fa-ban"></i> Evitar</h3>'+p.evitar.map(function(v){return '<div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13px;color:var(--tx2)"><i class="fas fa-times-circle" style="color:var(--err);margin-top:2px"></i><span>'+v+'</span></div>'}).join('')+'</div>':'';
 
-  var blob=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
-  var url=URL.createObjectURL(blob);
-  var link=document.createElement('a');link.href=url;link.download='madeixa-ritual-capilar.txt';link.click();
-  URL.revokeObjectURL(url);
-  showToast('Plano exportado!');
+  /* Shopping */
+  renderShop();
 }
 
-/* ═══════ EVENTS ═══════ */
-$('btnValidateKey').addEventListener('click',validateKey);
-$('apiKeyInput').addEventListener('keydown',function(e){if(e.key==='Enter')validateKey()});
-$('pwToggle').addEventListener('click',function(){
-  var inp=$('apiKeyInput');
-  var isP=inp.type==='password';
-  inp.type=isP?'text':'password';
-  this.innerHTML=isP?'<i class="fas fa-eye-slash"></i>':'<i class="fas fa-eye"></i>';
+function mkTk(t){return '<div class="ti"><div class="tc"><i class="fas fa-check"></i></div><div style="flex:1"><div class="tn">'+(t.tarefa||'')+'</div><div class="td">'+(t.detalhes||'')+'</div></div>'+(t.duracao?'<div class="tdu">'+t.duracao+'</div>':'')+'</div>'}
+function togD(dk){var b=$('db-'+dk),h=document.querySelector('.dh[data-day="'+dk+'"]');if(b&&h){b.classList.toggle('op');h.classList.toggle('ex')}}
+
+/* ═══ Shopping List ═══ */
+function renderShop(){
+  var p=S.plan;if(!p.lista_compras||!p.lista_compras.length){$('shopBox').innerHTML='<p style="color:var(--txm);text-align:center;padding:30px">Nenhum produto listado.</p>';return}
+  var totalItems=0,totalMin=0,totalMax=0;
+  p.lista_compras.forEach(function(cat){if(cat.itens)cat.itens.forEach(function(it){totalItems++;var pr=it.faixa_preco||'';var m=pr.match(/(\d+)[^\d]*(\d+)/);if(m){totalMin+=parseInt(m[1]);totalMax+=parseInt(m[2])}})});
+
+  var h='<div class="shop-prog"><div class="shop-prog-h"><span id="shopCount">0 de '+totalItems+' comprados</span><span id="shopPct">0%</span></div><div class="shop-prog-bar"><div class="shop-prog-fill" id="shopFill" style="width:0%"></div></div>';
+  if(totalMin)h+='<div class="shop-cost">Investimento estimado: R$'+totalMin+' – R$'+totalMax+'</div>';
+  h+='</div>';
+
+  var iconMap={soap:'fa-pump-soap',flask:'fa-flask',spray:'fa-spray-can','spray-can':'fa-spray-can',comb:'fa-comb',scissors:'fa-scissors',brush:'fa-paintbrush'};
+
+  p.lista_compras.forEach(function(cat,ci){
+    var icon=iconMap[cat.icone]||'fa-bag-shopping';
+    h+='<div class="shop-cat"><div class="shop-cat-h" data-ci="'+ci+'"><i class="fas '+icon+'"></i> <span>'+cat.categoria+'</span> <i class="fas fa-chevron-right arr"></i></div><div class="shop-cat-body" id="sc-'+ci+'">';
+    if(cat.itens)cat.itens.forEach(function(it){
+      var pc=it.prioridade==='essencial'?'pri-e':it.prioridade==='recomendado'?'pri-r':'pri-o';
+      h+='<div class="shop-item"><div class="shop-chk" data-total="'+totalItems+'"><i class="fas fa-check"></i></div><div class="shop-info"><div class="shop-name">'+(it.produto||'')+'</div><div class="shop-desc">'+(it.descricao||'')+'</div><div class="shop-meta">';
+      if(it.faixa_preco)h+='<span class="shop-price">'+it.faixa_preco+'</span>';
+      if(it.prioridade)h+='<span class="shop-pri '+pc+'">'+it.prioridade+'</span>';
+      h+='</div></div></div>';
+    });
+    h+='</div></div>';
+  });
+
+  $('shopBox').innerHTML=h;
+
+  /* Expand first category */
+  var fc=document.querySelector('.shop-cat-h');
+  if(fc)togSC(fc.getAttribute('data-ci'));
+
+  document.querySelectorAll('.shop-cat-h').forEach(function(h){h.addEventListener('click',function(){togSC(h.getAttribute('data-ci'))})});
+  document.querySelectorAll('.shop-chk').forEach(function(c){c.addEventListener('click',function(){
+    c.classList.toggle('ck');var n=c.parentElement.querySelector('.shop-name');if(n)n.classList.toggle('dn');
+    updateShopProg();
+  })});
+}
+
+function togSC(ci){var b=$('sc-'+ci),h=document.querySelector('.shop-cat-h[data-ci="'+ci+'"]');if(b&&h){b.classList.toggle('op');h.classList.toggle('ex')}}
+
+function updateShopProg(){
+  var total=document.querySelectorAll('.shop-chk').length;
+  var done=document.querySelectorAll('.shop-chk.ck').length;
+  var pct=total?Math.round(done/total*100):0;
+  var cnt=$('shopCount'),pp=$('shopPct'),fill=$('shopFill');
+  if(cnt)cnt.textContent=done+' de '+total+' comprados';
+  if(pp)pp.textContent=pct+'%';
+  if(fill)fill.style.width=pct+'%';
+}
+
+/* ═══ Tabs ═══ */
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('act')});
+    document.querySelectorAll('.tpanel').forEach(function(x){x.classList.remove('act')});
+    t.classList.add('act');
+    var tp=$('tp-'+t.getAttribute('data-tab'));
+    if(tp)tp.classList.add('act');
+  });
 });
 
-$('btnAnalyze').addEventListener('click',analyzeHair);
-$('btnBackKey').addEventListener('click',function(){showScr('key')});
-$('btnBackUpload').addEventListener('click',function(){showScr('upload')});
+/* ═══ Export TXT ═══ */
+function expTxt(){
+  if(!S.plan||!S.analysis)return;var a=S.analysis,p=S.plan,L=[];
+  L.push('MADEIXA — RELATÓRIO VISAGISTA E RITUAL CAPILAR');L.push('='.repeat(50));L.push('');
+  var nb=a.nota_beleza||{};L.push('NOTA DE BELEZA: '+(nb.geral||0).toFixed(1)+'/10');
+  L.push('Harmonia: '+(nb.harmonia_rosto_cabelo||0)+' | Saúde: '+(nb.saude_capilar||0)+' | Cor: '+(nb.coloracao||0)+' | Estilo: '+(nb.estilo||0)+' | Potencial: '+(nb.potencial||0));
+  if(nb.comentario)L.push(nb.comentario);L.push('');
 
-$('btnGenerate').addEventListener('click',function(){hideErr('prefsError');generatePlan()});
+  var f=a.rosto||{},sk=a.pele||{},cb=a.cabelo||{};
+  L.push('ROSTO: '+(f.formato||'')+' — '+(f.proporcoes||''));L.push('PELE: '+(sk.tom||'')+' | '+(sk.subtom||'')+' | Estação: '+(sk.estacao||''));
+  L.push('CABELO: '+(cb.tipo||'')+' '+(cb.subtipo||'')+' | '+(cb.textura||'')+' | '+(cb.condicao||''));L.push('');
 
-$('btnExport').addEventListener('click',exportPlan);
+  if(a.cortes_ideais){L.push('CORTES IDEAIS:');a.cortes_ideais.forEach(function(c){L.push('  ✂ '+c.nome+' — '+c.descricao)});L.push('')}
+  if(a.cores_ideais){L.push('CORES IDEAIS:');a.cores_ideais.forEach(function(c){L.push('  🎨 '+c.nome+' — '+c.descricao)});L.push('')}
+
+  L.push('');L.push(p.resumo||'');L.push('');L.push('PLANO SEMANAL');L.push('-'.repeat(50));
+  dayO.forEach(function(dk){var dd=p.dias&&p.dias[dk];if(!dd)return;L.push('');L.push((dayL[dk]||dk).toUpperCase());
+    if(dd.rotina_manha){L.push('  ☀ Manhã:');dd.rotina_manha.forEach(function(t){L.push('    • '+t.tarefa+(t.duracao?' ('+t.duracao+')':''));if(t.detalhes)L.push('      '+t.detalhes)})}
+    if(dd.rotina_noite){L.push('  🌙 Noite:');dd.rotina_noite.forEach(function(t){L.push('    • '+t.tarefa+(t.duracao?' ('+t.duracao+')':''));if(t.detalhes)L.push('      '+t.detalhes)})}
+  });
+
+  if(p.lista_compras){L.push('');L.push('LISTA DE COMPRAS');L.push('-'.repeat(50));p.lista_compras.forEach(function(cat){L.push('');L.push(cat.categoria.toUpperCase()+':');if(cat.itens)cat.itens.forEach(function(it){L.push('  '+(it.prioridade==='essencial'?'★':it.prioridade==='recomendado'?'●':'○')+' '+it.produto+(it.faixa_preco?' — '+it.faixa_preco:''));if(it.descricao)L.push('    '+it.descricao)})})}
+
+  if(p.dicas){L.push('');L.push('DICAS:');p.dicas.forEach(function(d){L.push('  ✓ '+d)})}
+  if(p.evitar){L.push('');L.push('EVITAR:');p.evitar.forEach(function(v){L.push('  ✗ '+v)})}
+  L.push('');L.push('Gerado por madeixa — visagismo inteligente');
+
+  var blob=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});var url=URL.createObjectURL(blob);
+  var a2=document.createElement('a');a2.href=url;a2.download='madeixa-plano.txt';a2.click();URL.revokeObjectURL(url);showToast('Plano exportado!');
+}
+
+/* ═══ Export ICS ═══ */
+function expIcs(){
+  if(!S.plan)return;
+  var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//madeixa//ritual-capilar//PT','CALSCALE:GREGORIAN'];
+  var wd={segunda:'MO',terca:'TU',quarta:'WE',quinta:'TH',sexta:'FR',sabado:'SA',domingo:'SU'};
+  var now=new Date();var base=new Date(now);
+  /* find next Monday */
+  var dow=base.getDay();var diff=(dow===0)?1:(dow===1)?0:(8-dow);base.setDate(base.getDate()+diff);
+
+  dayO.forEach(function(dk,i){
+    var dd=S.plan.dias&&S.plan.dias[dk];if(!dd)return;
+    var d=new Date(base);d.setDate(d.getDate()+i);
+    var ds=d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());
+    var desc=[];
+    if(dd.rotina_manha)dd.rotina_manha.forEach(function(t){desc.push('Manhã: '+t.tarefa+(t.detalhes?' — '+t.detalhes:''))});
+    if(dd.rotina_noite)dd.rotina_noite.forEach(function(t){desc.push('Noite: '+t.tarefa+(t.detalhes?' — '+t.detalhes:''))});
+    ics.push('BEGIN:VEVENT');
+    ics.push('DTSTART;VALUE=DATE:'+ds);
+    ics.push('SUMMARY:madeixa: Rotina de '+(dayL[dk]||dk));
+    ics.push('DESCRIPTION:'+desc.join('\\n').replace(/,/g,'\\,'));
+    ics.push('RRULE:FREQ=WEEKLY;BYDAY='+wd[dk]+';COUNT=12');
+    ics.push('END:VEVENT');
+  });
+  ics.push('END:VCALENDAR');
+
+  var blob=new Blob([ics.join('\r\n')],{type:'text/calendar;charset=utf-8'});var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='madeixa-ritual.ics';a.click();URL.revokeObjectURL(url);showToast('Calendário exportado! Abra no app de calendário.');
+}
+
+function pad(n){return n<10?'0'+n:''+n}
+
+/* ═══ Share ═══ */
+function shareSummary(){
+  if(!S.analysis)return;var nb=S.analysis.nota_beleza||{};
+  var txt='✨ Minha avaliação madeixa ✨\n\n'+
+    '💇 Nota de Beleza: '+(nb.geral||0).toFixed(1)+'/10\n'+
+    '🎯 Potencial: '+(nb.potencial||0).toFixed(1)+'/10\n\n'+
+    (nb.comentario||'')+'\n\n'+
+    'Faça sua análise em madeixa — visagismo inteligente com IA';
+  try{navigator.clipboard.writeText(txt);showToast('Copiado! Cole onde quiser.')}catch(e){showToast('Não foi possível copiar.')}
+}
+
+/* ═══ Events ═══ */
+$('btnKey').addEventListener('click',valKey);
+$('apiKey').addEventListener('keydown',function(e){if(e.key==='Enter')valKey()});
+$('pwTog').addEventListener('click',function(){var i=$('apiKey'),p=i.type==='password';i.type=p?'text':'password';this.innerHTML=p?'<i class="fas fa-eye-slash"></i>':'<i class="fas fa-eye"></i>'});
+$('btnAn').addEventListener('click',analyze);
+$('btnBK').addEventListener('click',function(){showScr('key')});
+$('btnBU').addEventListener('click',function(){showScr('upload')});
+$('btnGen').addEventListener('click',function(){hideErr('pErr');genPlan()});
+$('btnExpTxt').addEventListener('click',expTxt);
+$('btnExpIcs').addEventListener('click',expIcs);
+$('btnShare').addEventListener('click',shareSummary);
 $('btnRestart').addEventListener('click',function(){
-  state.photoFile=null;state.photoBase64=null;state.analysis=null;state.preferences=null;state.carePlan=null;
-  store.del('analysis');store.del('carePlan');store.del('preferences');
-  photoPrev.style.display='none';uplPlaceholder.style.display='';
-  uploadZone.classList.remove('has');$('btnAnalyze').disabled=true;
-  photoInput.value='';$('inpDesire').value='';$('inpRef').value='';$('inpFreq').value='';
-  document.querySelectorAll('.pri-chip input:checked').forEach(function(c){c.checked=false});
+  S.photoFile=null;S.photoB64=null;S.analysis=null;S.prefs=null;S.plan=null;
+  store.del('analysis');store.del('plan');store.del('prefs');
+  pP.style.display='none';uPh.style.display='';uZ.classList.remove('has');$('btnAn').disabled=true;pI.value='';
+  $('iDes').value='';$('iRef').value='';$('iFrq').value='';
+  document.querySelectorAll('.pchip input:checked').forEach(function(c){c.checked=false});
   showScr('upload');
 });
 
-/* ═══════ INIT ═══════ */
-(function init(){
-  /* restore API key */
-  var savedKey=store.get('apiKey','');
-  var savedModel=store.get('model','GPT-5.4');
-  if(savedKey){
-    $('apiKeyInput').value=savedKey;
-    state.apiKey=savedKey;
-  }
-  $('modelSelect').value=savedModel;
-  state.model=savedModel;
-
-  /* restore analysis session */
-  var savedAnalysis=store.get('analysis',null);
-  var savedPlan=store.get('carePlan',null);
-  var savedPrefs=store.get('preferences',null);
-
-  if(savedKey&&savedAnalysis&&savedPlan){
-    state.analysis=savedAnalysis;
-    state.carePlan=savedPlan;
-    state.preferences=savedPrefs;
-    renderReport();
-    renderCalendar();
-    showScr('calendar');
-  }else if(savedKey&&savedAnalysis){
-    state.analysis=savedAnalysis;
-    renderReport();
-    if(savedPrefs){
-      state.preferences=savedPrefs;
-      $('inpDesire').value=savedPrefs.desire||'';
-      $('inpRef').value=savedPrefs.reference||'';
-      $('inpFreq').value=savedPrefs.frequency||'';
-    }
-    showScr('report');
-  }else if(savedKey){
-    showScr('upload');
-  }
+/* ═══ Init ═══ */
+(function(){
+  var sk=store.get('apiKey',''),sm=store.get('model','GPT-5.4'),si=store.get('imgModel','Nano-Banana');
+  if(sk){$('apiKey').value=sk;S.apiKey=sk}
+  $('mdlSel').value=sm;S.model=sm;$('imgSel').value=si;S.imgModel=si;
+  var sa=store.get('analysis',null),sp=store.get('plan',null),spr=store.get('prefs',null);
+  if(sk&&sa&&sp){S.analysis=sa;S.plan=sp;S.prefs=spr;renderReport();renderPlan();showScr('plan')}
+  else if(sk&&sa){S.analysis=sa;renderReport();if(spr){S.prefs=spr;$('iDes').value=spr.desire||'';$('iRef').value=spr.reference||'';$('iFrq').value=spr.frequency||''}showScr('rpt')}
+  else if(sk){showScr('upload')}
 })();
 </script>
 </body>
