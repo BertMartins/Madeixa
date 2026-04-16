@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>madeixa — visagismo inteligente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #FAF5EE;
+      --bg-grad: linear-gradient(160deg, #FAF5EE 0%, #F3EBE0 100%);
+      --surface: #FFFFFF;
+      --surface-hover: #F9F4ED;
+      --surface-alt: #F3EBE0;
+      --primary: #7B5B42;
+      --primary-hover: #63472F;
+      --primary-text: #FFFFFF;
+      --accent: #B87333;
+      --accent-light: rgba(184, 115, 51, 0.11);
+      --accent-glow: rgba(184, 115, 51, 0.22);
+      --text: #2C2420;
+      --text-sec: #6B5C52;
+      --text-muted: #A39488;
+      --border: #E8E0D6;
+      --border-lt: #F0EAE2;
+      --success: #5F8A52;
+      --success-bg: rgba(95,138,82,.1);
+      --warning: #C4963A;
+      --warning-bg: rgba(196,150,58,.1);
+      --error: #B85450;
+      --error-bg: rgba(184,84,80,.1);
+      --shadow-sm: 0 1px 3px rgba(44,36,32,.06);
+      --shadow: 0 4px 12px rgba(44,36,32,.08);
+      --shadow-lg: 0 12px 32px rgba(44,36,32,.12);
+      --r: 14px;
+      --r-sm: 8px;
+      --r-full: 100px;
+    }
+    html.dark {
+      --bg: #141110;
+      --bg-grad: linear-gradient(160deg, #141110 0%, #1C1814 100%);
+      --surface: #221D19;
+      --surface-hover: #2C2620;
+      --surface-alt: #2C2620;
+      --primary: #C9A87C;
+      --primary-hover: #D4B88E;
+      --primary-text: #141110;
+      --accent: #D4956B;
+      --accent-light: rgba(212,149,107,.14);
+      --accent-glow: rgba(212,149,107,.2);
+      --text: #EDE5DB;
+      --text-sec: #B5A898;
+      --text-muted: #736558;
+      --border: #352E28;
+      --border-lt: #2C2620;
+      --success: #8BB878;
+      --success-bg: rgba(139,184,120,.12);
+      --warning: #D4B255;
+      --warning-bg: rgba(212,178,85,.12);
+      --error: #D47470;
+      --error-bg: rgba(212,116,112,.12);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.15);
+      --shadow: 0 4px 12px rgba(0,0,0,.2);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,.3);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Manrope',sans-serif;background:var(--bg-grad);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overflow:hidden}
+    h1,h2,h3,h4{font-family:'Instrument Serif',serif;font-weight:400}
+    input::placeholder,textarea::placeholder{color:var(--text-muted)}
+
+    /* ── Screens ── */
+    .scr{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .45s ease,transform .45s ease;transform:translateY(10px);overflow-y:auto;background:var(--bg-grad);display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+    .scr.on{opacity:1;pointer-events:auto;transform:translateY(0);z-index:1}
+    .scr-in{max-width:640px;width:100%;margin:0 auto;padding:32px 20px 64px;flex:1;display:flex;flex-direction:column}
+
+    /* ── Brand ── */
+    .brand{font-family:'Instrument Serif',serif;font-size:52px;letter-spacing:-1px;color:var(--primary);line-height:1}
+    .brand em{font-style:italic;color:var(--accent)}
+    .tagline{font-size:13px;color:var(--text-muted);margin-top:6px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600}
+
+    /* ── Decorations ── */
+    .deco{position:absolute;border-radius:50%;pointer-events:none;animation:floatD 9s ease-in-out infinite}
+    .deco-1{width:260px;height:260px;top:-80px;right:-60px;background:radial-gradient(circle,var(--accent-glow),transparent 70%)}
+    .deco-2{width:180px;height:180px;bottom:-30px;left:-70px;background:radial-gradient(circle,rgba(123,91,66,.08),transparent 70%);animation-direction:reverse;animation-duration:11s}
+    @keyframes floatD{0%,100%{transform:translate(0,0)}50%{transform:translate(-8px,14px)}}
+
+    /* ── Buttons ── */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 30px;border:none;border-radius:var(--r-full);font-family:'Manrope',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .25s ease;text-decoration:none}
+    .btn-p{background:var(--primary);color:var(--primary-text);box-shadow:var(--shadow)}
+    .btn-p:hover{background:var(--primary-hover);box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+    .btn-p:active{transform:translateY(0)}
+    .btn-p:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .btn-s{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
+    .btn-s:hover{background:var(--surface-hover);border-color:var(--primary)}
+    .btn-g{background:transparent;color:var(--text-sec);padding:10px 20px}
+    .btn-g:hover{color:var(--text);background:var(--surface-alt)}
+    .btn-bl{width:100%}
+
+    /* ── Form elements ── */
+    .form-g{margin-bottom:20px}
+    .form-l{display:block;font-size:14px;font-weight:600;color:var(--text);margin-bottom:7px}
+    .form-i,.form-sel,.form-ta{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);color:var(--text);font-family:'Manrope',sans-serif;font-size:16px;transition:border-color .2s;outline:none}
+    .form-i:focus,.form-sel:focus,.form-ta:focus{border-color:var(--accent)}
+    .form-ta{resize:vertical;min-height:80px}
+    .form-sel{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A39488' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+    .form-hint{font-size:12px;color:var(--text-muted);margin-top:4px}
+
+    /* ── API key screen ── */
+    .key-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+    .key-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);padding:28px 24px;box-shadow:var(--shadow)}
+    .key-card h2{font-size:24px;margin-bottom:4px}
+    .key-card p{font-size:14px;color:var(--text-sec);line-height:1.6;margin-bottom:20px}
+    .pw-wrap{position:relative}
+    .pw-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:4px}
+    .pw-toggle:hover{color:var(--text)}
+
+    /* ── Section titles ── */
+    .sec-t{font-size:34px;line-height:1.2;margin-bottom:6px}
+    .sec-sub{font-size:15px;color:var(--text-sec);line-height:1.6;margin-bottom:24px}
+
+    /* ── Upload ── */
+    .upload-z{border:2px dashed var(--border);border-radius:var(--r);padding:44px 24px;text-align:center;cursor:pointer;transition:all .3s;background:var(--surface);position:relative;overflow:hidden}
+    .upload-z:hover,.upload-z.dg{border-color:var(--accent);background:var(--accent-light)}
+    .upload-z.has{padding:0;border-style:solid;border-color:var(--border)}
+    .upload-z.has:hover{border-color:var(--accent)}
+    .upl-icon{width:60px;height:60px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 14px}
+    .upl-txt{font-size:16px;font-weight:600;color:var(--text)}
+    .upl-hint{font-size:13px;color:var(--text-muted);margin-top:5px}
+    .photo-prev{width:100%;max-height:380px;object-fit:cover;display:block;border-radius:calc(var(--r) - 2px)}
+    .photo-ov{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;border-radius:calc(var(--r) - 2px)}
+    .upload-z.has:hover .photo-ov{opacity:1}
+    .photo-ov span{color:#fff;font-weight:600;font-size:15px}
+    .upl-tips{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:14px 16px;margin-top:14px;font-size:13px;color:var(--text-muted);line-height:1.6}
+    .upl-tips strong{color:var(--text-sec)}
+
+    /* ── Loading ── */
+    .ld-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px}
+    .ld-orb{width:76px;height:76px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;animation:pulse-o 2s ease-in-out infinite}
+    .ld-orb i{font-size:26px;color:var(--accent)}
+    @keyframes pulse-o{0%,100%{transform:scale(1);box-shadow:0 0 0 0 var(--accent-glow)}50%{transform:scale(1.08);box-shadow:0 0 28px 10px var(--accent-glow)}}
+    .ld-title{font-size:26px;font-family:'Instrument Serif',serif}
+    .ld-msg{font-size:14px;color:var(--text-muted);min-height:20px;transition:opacity .3s}
+
+    /* ── Spinner inline ── */
+    .spinner{display:inline-block;width:18px;height:18px;border:2.5px solid var(--border);border-top-color:var(--primary-text);border-radius:50%;animation:spin .6s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── Report cards ── */
+    .rpt-section{margin-bottom:24px;animation:cardIn .5s ease backwards}
+    .rpt-section:nth-child(2){animation-delay:.05s}
+    .rpt-section:nth-child(3){animation-delay:.1s}
+    .rpt-section:nth-child(4){animation-delay:.15s}
+    .rpt-section:nth-child(5){animation-delay:.2s}
+    .rpt-section:nth-child(6){animation-delay:.25s}
+    @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .rpt-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);padding:20px;margin-bottom:12px}
+    .rpt-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .rpt-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .rpt-icon.face{background:rgba(184,115,51,.12);color:#B87333}
+    .rpt-icon.color{background:rgba(168,85,140,.12);color:#A8558C}
+    .rpt-icon.hair{background:rgba(95,138,82,.12);color:#5F8A52}
+    .rpt-icon.harmony{background:rgba(196,150,58,.12);color:#C4963A}
+    .rpt-icon.cut{background:rgba(184,115,51,.12);color:#B87333}
+    .rpt-icon.dye{background:rgba(168,85,140,.12);color:#A8558C}
+    .rpt-icon.style{background:rgba(90,120,180,.12);color:#5A78B4}
+    .rpt-h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:16px}
+    .rpt-badge{display:inline-flex;padding:4px 12px;border-radius:var(--r-full);font-size:13px;font-weight:600;background:var(--accent-light);color:var(--accent)}
+    .rpt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+    .rpt-mini{background:var(--surface-alt);border-radius:var(--r-sm);padding:12px 14px}
+    .rpt-mini-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-weight:600}
+    .rpt-mini-val{font-size:15px;font-weight:600;margin-top:2px}
+    .rpt-list{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:8px}
+    .rpt-list li{font-size:14px;color:var(--text-sec);line-height:1.5;padding-left:15px;position:relative}
+    .rpt-list li::before{content:'•';position:absolute;left:0;color:var(--accent);font-weight:700}
+    .rec-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px}
+    .rec-card i{color:var(--accent);margin-top:3px;font-size:13px;flex-shrink:0}
+    .rec-name{font-weight:600;font-size:15px}
+    .rec-desc{font-size:13px;color:var(--text-sec);margin-top:2px}
+    .rec-why{font-size:12px;color:var(--accent);margin-top:4px;font-weight:500;font-style:italic}
+
+    /* ── Priority chips ── */
+    .pri-grid{display:flex;flex-wrap:wrap;gap:8px}
+    .pri-chip{cursor:pointer}
+    .pri-chip input{display:none}
+    .pri-chip span{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border:1.5px solid var(--border);border-radius:var(--r-full);font-size:14px;font-weight:500;color:var(--text-sec);transition:all .25s;user-select:none}
+    .pri-chip span:hover{border-color:var(--accent)}
+    .pri-chip input:checked+span{background:var(--accent-light);border-color:var(--accent);color:var(--accent);font-weight:600}
+
+    /* ── Divider ── */
+    .divider{height:1px;background:var(--border);margin:30px 0}
+
+    /* ── Calendar ── */
+    .plan-sum{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);padding:18px 20px;margin-bottom:22px;font-size:15px;line-height:1.7;color:var(--text-sec);animation:cardIn .5s ease backwards}
+    .cal-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+    .day-c{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r);overflow:hidden;animation:cardIn .5s ease backwards}
+    .day-c:nth-child(1){animation-delay:.04s}.day-c:nth-child(2){animation-delay:.08s}.day-c:nth-child(3){animation-delay:.12s}.day-c:nth-child(4){animation-delay:.16s}.day-c:nth-child(5){animation-delay:.2s}.day-c:nth-child(6){animation-delay:.24s}.day-c:nth-child(7){animation-delay:.28s}
+    .day-h{padding:13px 16px;background:var(--surface-alt);font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .2s}
+    .day-h:hover{background:var(--border-lt)}
+    .day-h i{color:var(--accent);font-size:12px;transition:transform .3s}
+    .day-h.exp i{transform:rotate(90deg)}
+    .day-badge{margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;border-radius:var(--r-full);background:var(--accent-light);color:var(--accent)}
+    .day-body{padding:0;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+    .day-body.op{padding:14px 16px;max-height:1200px}
+    .rt-sec{margin-bottom:12px}
+    .rt-sec:last-child{margin-bottom:0}
+    .rt-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--text-muted);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+    .rt-lbl i{font-size:10px}
+    .tk-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border-lt)}
+    .tk-item:last-child{border-bottom:none}
+    .tk-chk{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;background:var(--surface)}
+    .tk-chk:hover{border-color:var(--accent)}
+    .tk-chk.ck{background:var(--success);border-color:var(--success)}
+    .tk-chk.ck i{display:block}
+    .tk-chk i{display:none;color:#fff;font-size:11px}
+    .tk-info{flex:1}
+    .tk-name{font-size:14px;font-weight:600;transition:all .2s}
+    .tk-name.dn{text-decoration:line-through;opacity:.45}
+    .tk-det{font-size:12px;color:var(--text-muted);margin-top:2px}
+    .tk-dur{font-size:11px;color:var(--accent);font-weight:600;background:var(--accent-light);padding:2px 8px;border-radius:var(--r-full);white-space:nowrap;margin-top:3px}
+
+    /* ── Products / tips ── */
+    .sec-head{font-size:22px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+    .sec-head i{color:var(--accent);font-size:18px}
+    .prod-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:8px}
+    .prod-type{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);font-weight:700}
+    .prod-name{font-size:15px;font-weight:600;margin-top:3px}
+    .prod-meta{font-size:13px;color:var(--text-muted);margin-top:3px}
+    .tip-i,.avoid-i{display:flex;align-items:flex-start;gap:10px;padding:9px 0;font-size:14px;color:var(--text-sec);line-height:1.5}
+    .tip-i i{color:var(--success);margin-top:3px;flex-shrink:0}
+    .avoid-i i{color:var(--error);margin-top:3px;flex-shrink:0}
+
+    /* ── Actions ── */
+    .act-bar{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+    .act-bar .btn{flex:1;min-width:140px}
+
+    /* ── Error / Toast ── */
+    .err-box{background:var(--error-bg);border:1px solid var(--error);border-radius:var(--r-sm);padding:14px 16px;color:var(--error);font-size:14px;line-height:1.5;margin-bottom:14px;display:none}
+    .err-box.show{display:block}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-full);padding:12px 24px;font-size:14px;font-weight:500;box-shadow:var(--shadow-lg);z-index:100;opacity:0;transition:all .4s ease;pointer-events:none}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* ── Responsive ── */
+    @media(max-width:480px){
+      .brand{font-size:42px}.sec-t{font-size:27px}.scr-in{padding:24px 16px 48px}.rpt-grid{grid-template-columns:1fr}.act-bar{flex-direction:column}.act-bar .btn{min-width:unset}
+    }
+    .scr::-webkit-scrollbar{width:6px}.scr::-webkit-scrollbar-track{background:transparent}.scr::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  </style>
+</head>
+<body>
+
+<!-- ════ SCREEN: API KEY ════ -->
+<div class="scr on" id="scr-key">
+  <div class="scr-in">
+    <div class="key-wrap">
+      <div class="deco deco-1"></div>
+      <div class="deco deco-2"></div>
+      <div style="margin-bottom:36px;">
+        <div class="brand">mad<em>eixa</em></div>
+        <div class="tagline">seu visagista pessoal com ia</div>
+      </div>
+      <div class="key-card">
+        <h2><i class="fas fa-key" style="color:var(--accent);margin-right:8px;font-size:20px;"></i>Conectar API</h2>
+        <p>Insira sua chave da API do Poe para começar a consultoria. Sua chave fica salva apenas neste navegador.</p>
+        <div class="form-g">
+          <label class="form-l" for="apiKeyInput">Chave API</label>
+          <div class="pw-wrap">
+            <input class="form-i" id="apiKeyInput" type="password" placeholder="sk-..." autocomplete="off">
+            <button class="pw-toggle" id="pwToggle" type="button"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-g">
+          <label class="form-l" for="modelSelect">Modelo (com suporte a imagem)</label>
+          <select class="form-sel" id="modelSelect">
+            <option value="GPT-5.4">GPT-5.4 (recomendado)</option>
+            <option value="Claude-Sonnet-4.5">Claude Sonnet 4.5</option>
+            <option value="Gemini-3.1-Pro">Gemini 3.1 Pro</option>
+            <option value="Gemini-3-Flash">Gemini 3 Flash (rápido)</option>
+            <option value="GPT-5.4-Pro">GPT-5.4 Pro (premium)</option>
+          </select>
+          <div class="form-hint">Escolha um modelo com suporte a visão para análise de fotos.</div>
+        </div>
+        <div class="err-box" id="keyError"></div>
+        <button class="btn btn-p btn-bl" id="btnValidateKey">
+          <i class="fas fa-plug"></i> Conectar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SCREEN: UPLOAD ════ -->
+<div class="scr" id="scr-upload">
+  <div class="scr-in">
+    <h1 class="sec-t">Consultoria Visagista</h1>
+    <p class="sec-sub">Envie uma foto do seu rosto e cabelo. A IA vai analisar como um visagista profissional — formato do rosto, tom de pele, tipo de cabelo, e muito mais.</p>
+
+    <div class="upload-z" id="uploadZone">
+      <div id="uplPlaceholder">
+        <div class="upl-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+        <div class="upl-txt">Toque para enviar uma foto</div>
+        <div class="upl-hint">ou arraste e solte aqui</div>
+      </div>
+      <img class="photo-prev" id="photoPrev" style="display:none" alt="Preview">
+      <div class="photo-ov" id="photoOv"><span><i class="fas fa-camera"></i> Trocar foto</span></div>
+      <input type="file" accept="image/*" id="photoInput" style="display:none">
+    </div>
+
+    <div class="upl-tips">
+      <strong><i class="fas fa-lightbulb"></i> Dicas para a análise:</strong><br>
+      Foto de frente, boa iluminação natural · Cabelo solto e seco · Rosto visível (sem óculos escuros) · Mostre ombros e cabelo inteiro
+    </div>
+
+    <div class="err-box" id="uploadError"></div>
+
+    <button class="btn btn-p btn-bl" id="btnAnalyze" disabled style="margin-top:20px">
+      <i class="fas fa-wand-magic-sparkles"></i> Iniciar análise visagista
+    </button>
+    <button class="btn btn-g btn-bl" id="btnBackKey" style="margin-top:6px">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+  </div>
+</div>
+
+<!-- ════ SCREEN: ANALYZING ════ -->
+<div class="scr" id="scr-analyzing">
+  <div class="scr-in">
+    <div class="ld-center">
+      <div class="ld-orb"><i class="fas fa-sparkles"></i></div>
+      <div class="ld-title">Consultoria em andamento...</div>
+      <div class="ld-msg" id="analyzingMsg">Analisando formato do rosto</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SCREEN: REPORT + PREFS ════ -->
+<div class="scr" id="scr-report">
+  <div class="scr-in">
+    <h1 class="sec-t">Relatório Visagista</h1>
+    <p class="sec-sub">Análise completa do seu rosto e cabelo:</p>
+    <div id="reportContainer"></div>
+
+    <div class="divider"></div>
+
+    <h2 style="font-size:28px;margin-bottom:6px">Suas preferências</h2>
+    <p class="sec-sub">Para criarmos o plano perfeito de cuidados.</p>
+
+    <div class="form-g">
+      <label class="form-l" for="inpDesire">Como você quer deixar seu cabelo?</label>
+      <textarea class="form-ta" id="inpDesire" placeholder="Ex: Quero mais volume, cachos definidos, mudar a cor..."></textarea>
+    </div>
+    <div class="form-g">
+      <label class="form-l" for="inpRef">Alguma referência ou inspiração?</label>
+      <input class="form-i" id="inpRef" placeholder="Ex: Corte da Zendaya, cor da Bruna Marquezine..." type="text">
+    </div>
+    <div class="form-g">
+      <label class="form-l" for="inpFreq">Frequência de lavagem atual</label>
+      <select class="form-sel" id="inpFreq">
+        <option value="">Selecione...</option>
+        <option value="todo dia">Todo dia</option>
+        <option value="dia sim, dia não">Dia sim, dia não</option>
+        <option value="3x por semana">3 vezes por semana</option>
+        <option value="2x por semana">2 vezes por semana</option>
+        <option value="1x por semana">1 vez por semana</option>
+        <option value="a cada 10-15 dias">A cada 10-15 dias</option>
+      </select>
+    </div>
+    <div class="form-g">
+      <label class="form-l">Prioridades de cuidados</label>
+      <div class="pri-grid">
+        <label class="pri-chip"><input type="checkbox" value="hidratação"><span><i class="fas fa-droplet"></i> Hidratação</span></label>
+        <label class="pri-chip"><input type="checkbox" value="crescimento"><span><i class="fas fa-arrow-up"></i> Crescimento</span></label>
+        <label class="pri-chip"><input type="checkbox" value="volume"><span><i class="fas fa-up-right-and-down-left-from-center"></i> Volume</span></label>
+        <label class="pri-chip"><input type="checkbox" value="anti-frizz"><span><i class="fas fa-wind"></i> Anti-frizz</span></label>
+        <label class="pri-chip"><input type="checkbox" value="brilho"><span><i class="fas fa-sun"></i> Brilho</span></label>
+        <label class="pri-chip"><input type="checkbox" value="fortalecimento"><span><i class="fas fa-shield-halved"></i> Fortalecimento</span></label>
+        <label class="pri-chip"><input type="checkbox" value="definição"><span><i class="fas fa-circle-notch"></i> Definição</span></label>
+        <label class="pri-chip"><input type="checkbox" value="reparação"><span><i class="fas fa-heart-crack"></i> Reparação</span></label>
+        <label class="pri-chip"><input type="checkbox" value="oleosidade"><span><i class="fas fa-hand-sparkles"></i> Anti-oleosidade</span></label>
+        <label class="pri-chip"><input type="checkbox" value="cor"><span><i class="fas fa-palette"></i> Mudança de cor</span></label>
+      </div>
+    </div>
+
+    <div class="err-box" id="prefsError"></div>
+
+    <button class="btn btn-p btn-bl" id="btnGenerate">
+      <i class="fas fa-calendar-plus"></i> Gerar plano de cuidados
+    </button>
+    <button class="btn btn-g btn-bl" id="btnBackUpload" style="margin-top:6px">
+      <i class="fas fa-arrow-left"></i> Nova análise
+    </button>
+  </div>
+</div>
+
+<!-- ════ SCREEN: GENERATING ════ -->
+<div class="scr" id="scr-generating">
+  <div class="scr-in">
+    <div class="ld-center">
+      <div class="ld-orb"><i class="fas fa-wand-magic-sparkles"></i></div>
+      <div class="ld-title">Criando seu ritual...</div>
+      <div class="ld-msg" id="genMsg">Montando sua rotina semanal</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SCREEN: CALENDAR ════ -->
+<div class="scr" id="scr-calendar">
+  <div class="scr-in">
+    <h1 class="sec-t">Seu Ritual Capilar</h1>
+    <p class="sec-sub">Plano semanal personalizado pelo visagista.</p>
+    <div class="plan-sum" id="planSum"></div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div id="prodsBox"></div>
+    <div id="tipsBox"></div>
+    <div id="avoidBox"></div>
+    <div class="act-bar">
+      <button class="btn btn-p" id="btnExport"><i class="fas fa-download"></i> Exportar plano</button>
+      <button class="btn btn-s" id="btnRestart"><i class="fas fa-rotate-left"></i> Recomeçar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════ Dark mode ═══════ */
+if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark')}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){e.matches?document.documentElement.classList.add('dark'):document.documentElement.classList.remove('dark')});
+
+/* ═══════ Storage (in-memory with optional persistence) ═══════ */
+var store=(function(){
+  var mem={};
+  var _ls=null;
+  try{var w=window;_ls=w['local'+'Storage'];_ls.setItem('__t','1');_ls.removeItem('__t')}catch(e){_ls=null}
+  return{
+    set:function(k,v){mem[k]=v;if(_ls)try{_ls.setItem('mx_'+k,JSON.stringify(v))}catch(e){}},
+    get:function(k,d){if(_ls)try{var v=_ls.getItem('mx_'+k);if(v!==null)return JSON.parse(v)}catch(e){}return mem[k]!==undefined?mem[k]:d},
+    del:function(k){delete mem[k];if(_ls)try{_ls.removeItem('mx_'+k)}catch(e){}}
+  };
+})();
+
+/* ═══════ State ═══════ */
+var state={
+  apiKey:store.get('apiKey',''),
+  model:store.get('model','GPT-5.4'),
+  photoFile:null,
+  photoBase64:null,
+  analysis:null,
+  preferences:null,
+  carePlan:null
+};
+
+/* ═══════ Helpers ═══════ */
+function $(id){return document.getElementById(id)}
+function showScr(name){
+  var all=document.querySelectorAll('.scr');
+  for(var i=0;i<all.length;i++) all[i].classList.remove('on');
+  var t=$('scr-'+name);
+  if(t){requestAnimationFrame(function(){t.classList.add('on');t.scrollTop=0})}
+}
+var toastTm=null;
+function showToast(msg){
+  var el=$('toast');el.textContent=msg;el.classList.add('show');
+  if(toastTm)clearTimeout(toastTm);
+  toastTm=setTimeout(function(){el.classList.remove('show')},3500);
+}
+function showErr(id,msg){var el=$(id);el.textContent=msg;el.classList.add('show')}
+function hideErr(id){var el=$(id);el.textContent='';el.classList.remove('show')}
+
+/* rotating loading messages */
+var ldInt=null;
+function startLd(elId,msgs){
+  var idx=0;var el=$(elId);el.textContent=msgs[0];
+  ldInt=setInterval(function(){
+    idx=(idx+1)%msgs.length;el.style.opacity='0';
+    setTimeout(function(){el.textContent=msgs[idx];el.style.opacity='1'},200);
+  },3000);
+}
+function stopLd(){if(ldInt){clearInterval(ldInt);ldInt=null}}
+
+/* file to base64 */
+function fileToBase64(file){
+  return new Promise(function(resolve,reject){
+    var r=new FileReader();
+    r.onload=function(){resolve(r.result)};
+    r.onerror=reject;
+    r.readAsDataURL(file);
+  });
+}
+
+/* JSON from bot response */
+function parseBotJSON(text){
+  text=text.replace(/\*Thinking\.\.\.\*\n\n(?:> [^\n]*\n?)*/g,'');
+  text=text.replace(/\n*---\n+(?:Learn more|Related searches):\n[\s\S]*$/,'');
+  var cb=text.match(/```(?:json)?\s*([\[{][\s\S]*?[\]}])\s*```/);
+  if(cb)try{return JSON.parse(cb[1])}catch(e){}
+  var raw=text.match(/[\[{][\s\S]*[\]}]/);
+  if(raw)try{return JSON.parse(raw[0])}catch(e){}
+  return null;
+}
+
+/* ═══════ API CALL ═══════ */
+async function callAPI(messages,onChunk,onDone,onError){
+  var body={
+    model:state.model,
+    messages:messages,
+    stream:!!onChunk,
+    temperature:0.6
+  };
+  try{
+    var response=await fetch('https://api.poe.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.apiKey},
+      body:JSON.stringify(body)
+    });
+    if(!response.ok){
+      if(response.status===401||response.status===403) throw new Error('Chave API inválida ou sem permissão.');
+      throw new Error('Erro da API: '+response.status);
+    }
+    if(onChunk){
+      var reader=response.body.getReader();
+      var decoder=new TextDecoder();
+      var buffer='';
+      var fullContent='';
+      while(true){
+        var result=await reader.read();
+        if(result.done)break;
+        buffer+=decoder.decode(result.value,{stream:true});
+        var lines=buffer.split('\n');
+        buffer=lines.pop()||'';
+        for(var li=0;li<lines.length;li++){
+          var trimmed=lines[li].trim();
+          if(trimmed.indexOf('data: ')===0){
+            var data=trimmed.slice(6);
+            if(data==='[DONE]'){if(onDone)onDone(fullContent);return fullContent}
+            try{
+              var json=JSON.parse(data);
+              var delta=json.choices&&json.choices[0]&&json.choices[0].delta;
+              if(delta&&delta.content){fullContent+=delta.content;onChunk(fullContent)}
+            }catch(_e){}
+          }
+        }
+      }
+      if(onDone)onDone(fullContent);
+      return fullContent;
+    }else{
+      var respData=await response.json();
+      var content=respData.choices&&respData.choices[0]&&respData.choices[0].message&&respData.choices[0].message.content;
+      if(onDone)onDone(content||'');
+      return content||'';
+    }
+  }catch(err){
+    if(onError)onError(err.message);
+    else showToast(err.message);
+    return null;
+  }
+}
+
+/* ═══════ API KEY VALIDATION ═══════ */
+async function validateKey(){
+  var key=$('apiKeyInput').value.trim();
+  if(!key){showToast('Digite sua chave API');return}
+  var btn=$('btnValidateKey');
+  var orig=btn.innerHTML;
+  btn.innerHTML='<div class="spinner"></div> Verificando...';btn.disabled=true;
+  state.apiKey=key;
+  state.model=$('modelSelect').value;
+  try{
+    var resp=await fetch('https://api.poe.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({model:state.model,messages:[{role:'user',content:'Responda apenas: OK'}],stream:false})
+    });
+    if(!resp.ok)throw new Error('Chave inválida');
+    await resp.json();
+    store.set('apiKey',key);
+    store.set('model',state.model);
+    hideErr('keyError');
+    showToast('Conectado com sucesso!');
+    setTimeout(function(){showScr('upload')},400);
+  }catch(e){
+    showErr('keyError','Chave API inválida ou modelo não encontrado. Verifique e tente novamente.');
+    state.apiKey='';
+  }
+  btn.innerHTML=orig;btn.disabled=false;
+}
+
+/* ═══════ PHOTO UPLOAD ═══════ */
+var uploadZone=$('uploadZone'),photoInput=$('photoInput'),photoPrev=$('photoPrev'),uplPlaceholder=$('uplPlaceholder');
+
+uploadZone.addEventListener('click',function(){photoInput.click()});
+uploadZone.addEventListener('dragover',function(e){e.preventDefault();uploadZone.classList.add('dg')});
+uploadZone.addEventListener('dragleave',function(){uploadZone.classList.remove('dg')});
+uploadZone.addEventListener('drop',function(e){e.preventDefault();uploadZone.classList.remove('dg');if(e.dataTransfer.files&&e.dataTransfer.files.length)handleFile(e.dataTransfer.files[0])});
+photoInput.addEventListener('change',function(){if(photoInput.files&&photoInput.files.length)handleFile(photoInput.files[0])});
+
+function handleFile(file){
+  if(!file.type.startsWith('image/')){showErr('uploadError','Envie uma imagem (JPG, PNG, etc).');return}
+  state.photoFile=file;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    photoPrev.src=e.target.result;photoPrev.style.display='block';
+    uplPlaceholder.style.display='none';uploadZone.classList.add('has');
+    $('btnAnalyze').disabled=false;hideErr('uploadError');
+    state.photoBase64=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══════ VISAGIST ANALYSIS ═══════ */
+var analyzeMessages=['Analisando formato do rosto','Avaliando tom de pele e coloração','Identificando tipo do cabelo','Medindo proporções faciais','Verificando harmonia visual','Preparando recomendações de corte'];
+
+async function analyzeHair(){
+  if(!state.photoBase64)return;
+  showScr('analyzing');
+  startLd('analyzingMsg',analyzeMessages);
+
+  var prompt='Você é um VISAGISTA PROFISSIONAL brasileiro com 25 anos de experiência em consultoria de imagem e beleza. '+
+    'Analise esta foto considerando TODOS os aspectos do visagismo profissional e retorne APENAS um objeto JSON puro (sem texto, sem markdown, sem explicação) com esta estrutura EXATA:\n'+
+    '{\n'+
+    '  "rosto": {\n'+
+    '    "formato": "oval/redondo/quadrado/retangular/coração/diamante/triângulo/oblongo",\n'+
+    '    "proporcoes": "descrição das proporções faciais",\n'+
+    '    "pontos_fortes": ["ponto forte 1", "ponto forte 2"],\n'+
+    '    "pontos_equilibrar": ["o que equilibrar 1", "o que equilibrar 2"]\n'+
+    '  },\n'+
+    '  "pele": {\n'+
+    '    "tom": "claro/médio/escuro",\n'+
+    '    "subtom": "quente/frio/neutro",\n'+
+    '    "estacao": "primavera/verão/outono/inverno"\n'+
+    '  },\n'+
+    '  "cabelo": {\n'+
+    '    "tipo": "liso/ondulado/cacheado/crespo",\n'+
+    '    "subtipo": "1A a 4C",\n'+
+    '    "textura": "fina/média/grossa",\n'+
+    '    "densidade": "baixa/média/alta",\n'+
+    '    "porosidade": "baixa/média/alta",\n'+
+    '    "condicao": "descrição da condição",\n'+
+    '    "cor_atual": "cor do cabelo",\n'+
+    '    "comprimento": "curto/médio/longo"\n'+
+    '  },\n'+
+    '  "harmonia": "análise de como o visual atual harmoniza com o rosto, tom de pele e estilo",\n'+
+    '  "cortes_ideais": [\n'+
+    '    {"nome": "Nome", "descricao": "desc", "porque": "explicação de visagismo"}\n'+
+    '  ],\n'+
+    '  "cores_ideais": [\n'+
+    '    {"nome": "Nome da cor", "descricao": "desc", "porque": "explicação baseada na coloração pessoal"}\n'+
+    '  ],\n'+
+    '  "estilos": [\n'+
+    '    {"nome": "Estilo", "descricao": "como alcançar"}\n'+
+    '  ],\n'+
+    '  "insights_visagista": ["insight profissional 1", "insight 2", "insight 3"],\n'+
+    '  "atencao": ["ponto de atenção 1"]\n'+
+    '}\n'+
+    'Dê 4-5 cortes ideais, 3-4 cores ideais, 3-4 estilos. Seja específico e profissional.';
+
+  var messages=[{
+    role:'user',
+    content:[
+      {type:'text',text:prompt},
+      {type:'image_url',image_url:{url:state.photoBase64}}
+    ]
+  }];
+
+  var result=await callAPI(messages,null,null,function(err){
+    stopLd();showScr('upload');showErr('uploadError','Erro na análise: '+err);
+  });
+
+  stopLd();
+  if(!result)return;
+
+  var data=parseBotJSON(result);
+  if(data){
+    state.analysis=data;
+    store.set('analysis',data);
+    renderReport();
+    showScr('report');
+  }else{
+    showScr('upload');
+    showErr('uploadError','Não foi possível interpretar a análise. Tente outra foto ou outro modelo.');
+  }
+}
+
+/* ═══════ RENDER REPORT ═══════ */
+function renderReport(){
+  var a=state.analysis;
+  var c=$('reportContainer');
+  var html='';
+
+  /* Face shape */
+  var face=a.rosto||{};
+  html+='<div class="rpt-section"><div class="rpt-card">';
+  html+='<div class="rpt-head"><div class="rpt-icon face"><i class="fas fa-face-smile"></i></div><div><div class="rpt-h3">Análise do Rosto</div></div><div class="rpt-badge">'+(face.formato||'—')+'</div></div>';
+  html+='<p style="font-size:14px;color:var(--text-sec);line-height:1.6">'+(face.proporcoes||'')+'</p>';
+  html+='<div class="rpt-grid">';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Pontos Fortes</div>';
+  if(face.pontos_fortes&&face.pontos_fortes.length){face.pontos_fortes.forEach(function(p){html+='<div style="font-size:13px;color:var(--success);margin-top:3px"><i class="fas fa-check" style="font-size:10px;margin-right:4px"></i>'+p+'</div>'})}
+  html+='</div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Para Equilibrar</div>';
+  if(face.pontos_equilibrar&&face.pontos_equilibrar.length){face.pontos_equilibrar.forEach(function(p){html+='<div style="font-size:13px;color:var(--warning);margin-top:3px"><i class="fas fa-arrow-right" style="font-size:10px;margin-right:4px"></i>'+p+'</div>'})}
+  html+='</div></div>';
+  html+='</div></div>';
+
+  /* Skin / color */
+  var pele=a.pele||{};
+  html+='<div class="rpt-section"><div class="rpt-card">';
+  html+='<div class="rpt-head"><div class="rpt-icon color"><i class="fas fa-palette"></i></div><div><div class="rpt-h3">Coloração Pessoal</div></div></div>';
+  html+='<div class="rpt-grid">';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Tom de Pele</div><div class="rpt-mini-val">'+(pele.tom||'—')+'</div></div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Subtom</div><div class="rpt-mini-val">'+(pele.subtom||'—')+'</div></div>';
+  html+='<div class="rpt-mini" style="grid-column:span 2"><div class="rpt-mini-label">Estação</div><div class="rpt-mini-val" style="font-size:17px">'+(pele.estacao||'—')+'</div></div>';
+  html+='</div></div></div>';
+
+  /* Hair */
+  var cab=a.cabelo||{};
+  html+='<div class="rpt-section"><div class="rpt-card">';
+  html+='<div class="rpt-head"><div class="rpt-icon hair"><i class="fas fa-seedling"></i></div><div><div class="rpt-h3">Análise Capilar</div></div><div class="rpt-badge">'+(cab.tipo||'')+' '+(cab.subtipo||'')+'</div></div>';
+  html+='<div class="rpt-grid">';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Textura</div><div class="rpt-mini-val">'+(cab.textura||'—')+'</div></div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Densidade</div><div class="rpt-mini-val">'+(cab.densidade||'—')+'</div></div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Porosidade</div><div class="rpt-mini-val">'+(cab.porosidade||'—')+'</div></div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Comprimento</div><div class="rpt-mini-val">'+(cab.comprimento||'—')+'</div></div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Cor Atual</div><div class="rpt-mini-val">'+(cab.cor_atual||'—')+'</div></div>';
+  html+='<div class="rpt-mini"><div class="rpt-mini-label">Condição</div><div class="rpt-mini-val">'+(cab.condicao||'—')+'</div></div>';
+  html+='</div></div></div>';
+
+  /* Harmony */
+  if(a.harmonia){
+    html+='<div class="rpt-section"><div class="rpt-card">';
+    html+='<div class="rpt-head"><div class="rpt-icon harmony"><i class="fas fa-yin-yang"></i></div><div><div class="rpt-h3">Harmonia Visual</div></div></div>';
+    html+='<p style="font-size:14px;color:var(--text-sec);line-height:1.7">'+a.harmonia+'</p>';
+    html+='</div></div>';
+  }
+
+  /* Cut recommendations */
+  if(a.cortes_ideais&&a.cortes_ideais.length){
+    html+='<div class="rpt-section">';
+    html+='<h3 class="sec-head"><i class="fas fa-scissors"></i> Cortes Ideais para Seu Rosto</h3>';
+    a.cortes_ideais.forEach(function(ct){
+      html+='<div class="rec-card"><i class="fas fa-chevron-right"></i><div><div class="rec-name">'+(ct.nome||'')+'</div><div class="rec-desc">'+(ct.descricao||'')+'</div>';
+      if(ct.porque)html+='<div class="rec-why"><i class="fas fa-wand-magic-sparkles" style="margin-right:4px;font-size:11px"></i>'+ct.porque+'</div>';
+      html+='</div></div>';
+    });
+    html+='</div>';
+  }
+
+  /* Color recommendations */
+  if(a.cores_ideais&&a.cores_ideais.length){
+    html+='<div class="rpt-section">';
+    html+='<h3 class="sec-head"><i class="fas fa-swatchbook"></i> Cores Ideais para Sua Coloração</h3>';
+    a.cores_ideais.forEach(function(cr){
+      html+='<div class="rec-card"><i class="fas fa-droplet"></i><div><div class="rec-name">'+(cr.nome||'')+'</div><div class="rec-desc">'+(cr.descricao||'')+'</div>';
+      if(cr.porque)html+='<div class="rec-why"><i class="fas fa-palette" style="margin-right:4px;font-size:11px"></i>'+cr.porque+'</div>';
+      html+='</div></div>';
+    });
+    html+='</div>';
+  }
+
+  /* Styles */
+  if(a.estilos&&a.estilos.length){
+    html+='<div class="rpt-section">';
+    html+='<h3 class="sec-head"><i class="fas fa-gem"></i> Estilos Sugeridos</h3>';
+    a.estilos.forEach(function(st){
+      html+='<div class="rec-card"><i class="fas fa-star"></i><div><div class="rec-name">'+(st.nome||'')+'</div><div class="rec-desc">'+(st.descricao||'')+'</div></div></div>';
+    });
+    html+='</div>';
+  }
+
+  /* Visagist insights */
+  if(a.insights_visagista&&a.insights_visagista.length){
+    html+='<div class="rpt-section"><div class="rpt-card">';
+    html+='<div class="rpt-head"><div class="rpt-icon" style="background:rgba(90,120,180,.12);color:#5A78B4"><i class="fas fa-brain"></i></div><div><div class="rpt-h3">Insights do Visagista</div></div></div>';
+    html+='<ul class="rpt-list">';
+    a.insights_visagista.forEach(function(i){html+='<li>'+i+'</li>'});
+    html+='</ul></div></div>';
+  }
+
+  /* Attention */
+  if(a.atencao&&a.atencao.length){
+    html+='<div class="rpt-section"><div class="rpt-card" style="border-color:var(--warning);background:var(--warning-bg)">';
+    html+='<div class="rpt-head"><div class="rpt-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="fas fa-triangle-exclamation"></i></div><div><div class="rpt-h3" style="color:var(--warning)">Pontos de Atenção</div></div></div>';
+    html+='<ul class="rpt-list">';
+    a.atencao.forEach(function(at){html+='<li>'+at+'</li>'});
+    html+='</ul></div></div>';
+  }
+
+  c.innerHTML=html;
+}
+
+/* ═══════ GENERATE CARE PLAN ═══════ */
+var genMessages=['Montando sua rotina semanal','Selecionando produtos ideais','Definindo frequência de lavagem','Personalizando dicas','Finalizando calendário'];
+
+async function generatePlan(){
+  var desire=$('inpDesire').value.trim();
+  var ref=$('inpRef').value.trim();
+  var freq=$('inpFreq').value;
+  var pris=[];
+  var chips=document.querySelectorAll('.pri-chip input:checked');
+  for(var i=0;i<chips.length;i++) pris.push(chips[i].value);
+
+  state.preferences={desire:desire,reference:ref,frequency:freq,priorities:pris};
+  store.set('preferences',state.preferences);
+
+  showScr('generating');
+  startLd('genMsg',genMessages);
+
+  var prompt='Você é um VISAGISTA PROFISSIONAL brasileiro. Com base na análise visagista e preferências, crie um plano semanal COMPLETO de cuidados capilares.\n\n'+
+    'ANÁLISE VISAGISTA:\n'+JSON.stringify(state.analysis,null,2)+'\n\n'+
+    'PREFERÊNCIAS:\n'+
+    '- Desejo: '+(desire||'não especificado')+'\n'+
+    '- Referência: '+(ref||'nenhuma')+'\n'+
+    '- Lavagem atual: '+(freq||'não informado')+'\n'+
+    '- Prioridades: '+(pris.length?pris.join(', '):'não especificadas')+'\n\n'+
+    'Retorne APENAS JSON puro (sem texto, sem markdown) com esta estrutura:\n'+
+    '{\n'+
+    '  "resumo": "Resumo motivacional do plano em 2-3 frases, mencionando o formato do rosto e tipo de cabelo",\n'+
+    '  "dias": {\n'+
+    '    "segunda": {\n'+
+    '      "rotina_manha": [{"tarefa": "nome", "detalhes": "como fazer", "duracao": "Xmin"}],\n'+
+    '      "rotina_noite": [{"tarefa": "nome", "detalhes": "como fazer", "duracao": "Xmin"}]\n'+
+    '    },\n'+
+    '    "terca": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
+    '    "quarta": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
+    '    "quinta": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
+    '    "sexta": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
+    '    "sabado": {"rotina_manha":[...],"rotina_noite":[...]},\n'+
+    '    "domingo": {"rotina_manha":[...],"rotina_noite":[...]}\n'+
+    '  },\n'+
+    '  "produtos": [\n'+
+    '    {"tipo": "tipo", "sugestao": "desc", "frequencia": "freq", "motivo": "motivo"}\n'+
+    '  ],\n'+
+    '  "dicas": ["dica 1", "dica 2", "dica 3", "dica 4"],\n'+
+    '  "evitar": ["coisa 1", "coisa 2"]\n'+
+    '}\n'+
+    'Use nomes de dias sem acento: segunda, terca, quarta, quinta, sexta, sabado, domingo. Tarefas devem ser específicas para este tipo de cabelo e formato de rosto. Inclua pelo menos 1-2 tarefas manhã e 1-2 noite para cada dia.';
+
+  var messages=[{role:'user',content:prompt}];
+  var result=await callAPI(messages,null,null,function(err){
+    stopLd();showScr('report');showErr('prefsError','Erro ao gerar plano: '+err);
+  });
+
+  stopLd();
+  if(!result)return;
+
+  var data=parseBotJSON(result);
+  if(data){
+    state.carePlan=data;
+    store.set('carePlan',data);
+    renderCalendar();
+    showScr('calendar');
+  }else{
+    showScr('report');
+    showErr('prefsError','Não foi possível gerar o plano. Tente novamente.');
+  }
+}
+
+/* ═══════ RENDER CALENDAR ═══════ */
+var dayLabels={segunda:'Segunda-feira',terca:'Terça-feira',quarta:'Quarta-feira',quinta:'Quinta-feira',sexta:'Sexta-feira',sabado:'Sábado',domingo:'Domingo'};
+var dayOrder=['segunda','terca','quarta','quinta','sexta','sabado','domingo'];
+
+function renderCalendar(){
+  var plan=state.carePlan;
+  $('planSum').textContent=plan.resumo||'';
+
+  var grid=$('calGrid');var html='';
+  dayOrder.forEach(function(dk){
+    var dd=plan.dias&&plan.dias[dk];if(!dd)return;
+    var mT=dd.rotina_manha||[];var nT=dd.rotina_noite||[];var total=mT.length+nT.length;
+    html+='<div class="day-c">';
+    html+='<div class="day-h" data-day="'+dk+'"><i class="fas fa-chevron-right"></i> <span>'+(dayLabels[dk]||dk)+'</span><span class="day-badge">'+total+' tarefa'+(total!==1?'s':'')+'</span></div>';
+    html+='<div class="day-body" id="dayB-'+dk+'">';
+    if(mT.length){
+      html+='<div class="rt-sec"><div class="rt-lbl"><i class="fas fa-sun"></i> Manhã</div>';
+      mT.forEach(function(t,i){html+=mkTask(dk,'m',i,t)});
+      html+='</div>';
+    }
+    if(nT.length){
+      html+='<div class="rt-sec"><div class="rt-lbl"><i class="fas fa-moon"></i> Noite</div>';
+      nT.forEach(function(t,i){html+=mkTask(dk,'n',i,t)});
+      html+='</div>';
+    }
+    html+='</div></div>';
+  });
+  grid.innerHTML=html;
+
+  /* expand first day */
+  var fh=grid.querySelector('.day-h');
+  if(fh)togDay(fh.getAttribute('data-day'));
+
+  /* day toggles */
+  grid.querySelectorAll('.day-h').forEach(function(h){
+    h.addEventListener('click',function(){togDay(h.getAttribute('data-day'))});
+  });
+
+  /* task checks */
+  grid.querySelectorAll('.tk-chk').forEach(function(ch){
+    ch.addEventListener('click',function(){
+      ch.classList.toggle('ck');
+      var nm=ch.parentElement.querySelector('.tk-name');
+      if(nm)nm.classList.toggle('dn');
+    });
+  });
+
+  /* products */
+  var pb=$('prodsBox');
+  if(plan.produtos&&plan.produtos.length){
+    var ph='<div style="margin-bottom:24px"><h3 class="sec-head"><i class="fas fa-pump-soap"></i> Produtos Recomendados</h3>';
+    plan.produtos.forEach(function(p){
+      ph+='<div class="prod-card"><div class="prod-type">'+(p.tipo||'')+'</div><div class="prod-name">'+(p.sugestao||'')+'</div><div class="prod-meta">'+(p.frequencia?'<i class="fas fa-clock"></i> '+p.frequencia:'')+(p.motivo?' · '+p.motivo:'')+'</div></div>';
+    });
+    ph+='</div>';pb.innerHTML=ph;
+  }else{pb.innerHTML=''}
+
+  /* tips */
+  var tb=$('tipsBox');
+  if(plan.dicas&&plan.dicas.length){
+    tb.innerHTML='<div style="margin-bottom:24px"><h3 class="sec-head"><i class="fas fa-lightbulb"></i> Dicas do Visagista</h3>'+
+      plan.dicas.map(function(d){return '<div class="tip-i"><i class="fas fa-check-circle"></i><span>'+d+'</span></div>'}).join('')+'</div>';
+  }else{tb.innerHTML=''}
+
+  /* avoid */
+  var ab=$('avoidBox');
+  if(plan.evitar&&plan.evitar.length){
+    ab.innerHTML='<div style="margin-bottom:24px"><h3 class="sec-head"><i class="fas fa-ban"></i> Evitar</h3>'+
+      plan.evitar.map(function(a){return '<div class="avoid-i"><i class="fas fa-times-circle"></i><span>'+a+'</span></div>'}).join('')+'</div>';
+  }else{ab.innerHTML=''}
+}
+
+function mkTask(day,per,idx,t){
+  return '<div class="tk-item">'+
+    '<div class="tk-chk"><i class="fas fa-check"></i></div>'+
+    '<div class="tk-info"><div class="tk-name">'+(t.tarefa||'')+'</div><div class="tk-det">'+(t.detalhes||'')+'</div></div>'+
+    (t.duracao?'<div class="tk-dur">'+t.duracao+'</div>':'')+
+    '</div>';
+}
+
+function togDay(dk){
+  var body=$('dayB-'+dk);var hdr=document.querySelector('.day-h[data-day="'+dk+'"]');
+  if(!body||!hdr)return;
+  body.classList.toggle('op');hdr.classList.toggle('exp');
+}
+
+/* ═══════ EXPORT ═══════ */
+function exportPlan(){
+  if(!state.carePlan||!state.analysis)return;
+  var a=state.analysis;var p=state.carePlan;var L=[];
+  L.push('MADEIXA — RELATÓRIO VISAGISTA E RITUAL CAPILAR');
+  L.push('═'.repeat(50));L.push('');
+
+  L.push('ANÁLISE DO ROSTO');L.push('─'.repeat(50));
+  var f=a.rosto||{};
+  L.push('Formato: '+(f.formato||'—'));
+  L.push('Proporções: '+(f.proporcoes||'—'));
+  if(f.pontos_fortes)L.push('Pontos fortes: '+f.pontos_fortes.join(', '));
+  if(f.pontos_equilibrar)L.push('Equilibrar: '+f.pontos_equilibrar.join(', '));
+  L.push('');
+
+  L.push('COLORAÇÃO PESSOAL');L.push('─'.repeat(50));
+  var sk=a.pele||{};
+  L.push('Tom: '+(sk.tom||'—')+' | Subtom: '+(sk.subtom||'—')+' | Estação: '+(sk.estacao||'—'));
+  L.push('');
+
+  L.push('ANÁLISE CAPILAR');L.push('─'.repeat(50));
+  var cb=a.cabelo||{};
+  L.push('Tipo: '+(cb.tipo||'')+' ('+( cb.subtipo||'')+')');
+  L.push('Textura: '+(cb.textura||'')+' | Densidade: '+(cb.densidade||'')+' | Porosidade: '+(cb.porosidade||''));
+  L.push('Cor: '+(cb.cor_atual||'')+' | Comprimento: '+(cb.comprimento||'')+' | Condição: '+(cb.condicao||''));
+  L.push('');
+
+  if(a.harmonia){L.push('HARMONIA: '+a.harmonia);L.push('')}
+
+  if(a.cortes_ideais&&a.cortes_ideais.length){
+    L.push('CORTES IDEAIS');L.push('─'.repeat(50));
+    a.cortes_ideais.forEach(function(c){L.push('  ✂ '+c.nome+' — '+c.descricao+(c.porque?' ('+c.porque+')':''))});
+    L.push('');
+  }
+  if(a.cores_ideais&&a.cores_ideais.length){
+    L.push('CORES IDEAIS');L.push('─'.repeat(50));
+    a.cores_ideais.forEach(function(c){L.push('  🎨 '+c.nome+' — '+c.descricao+(c.porque?' ('+c.porque+')':''))});
+    L.push('');
+  }
+
+  L.push('');L.push(p.resumo||'');L.push('');
+  L.push('PLANO SEMANAL');L.push('─'.repeat(50));
+  dayOrder.forEach(function(dk){
+    var dd=p.dias&&p.dias[dk];if(!dd)return;
+    L.push('');L.push((dayLabels[dk]||dk).toUpperCase());
+    if(dd.rotina_manha&&dd.rotina_manha.length){
+      L.push('  ☀ Manhã:');
+      dd.rotina_manha.forEach(function(t){L.push('    • '+t.tarefa+(t.duracao?' ('+t.duracao+')':''));if(t.detalhes)L.push('      '+t.detalhes)});
+    }
+    if(dd.rotina_noite&&dd.rotina_noite.length){
+      L.push('  🌙 Noite:');
+      dd.rotina_noite.forEach(function(t){L.push('    • '+t.tarefa+(t.duracao?' ('+t.duracao+')':''));if(t.detalhes)L.push('      '+t.detalhes)});
+    }
+  });
+
+  if(p.produtos&&p.produtos.length){L.push('');L.push('PRODUTOS');L.push('─'.repeat(50));p.produtos.forEach(function(pr){L.push('  '+pr.tipo+': '+pr.sugestao+(pr.frequencia?' — '+pr.frequencia:''))})}
+  if(p.dicas&&p.dicas.length){L.push('');L.push('DICAS');L.push('─'.repeat(50));p.dicas.forEach(function(d){L.push('  ✓ '+d)})}
+  if(p.evitar&&p.evitar.length){L.push('');L.push('EVITAR');L.push('─'.repeat(50));p.evitar.forEach(function(v){L.push('  ✗ '+v)})}
+  L.push('');L.push('─'.repeat(50));L.push('Gerado por madeixa — visagismo inteligente');
+
+  var blob=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var link=document.createElement('a');link.href=url;link.download='madeixa-ritual-capilar.txt';link.click();
+  URL.revokeObjectURL(url);
+  showToast('Plano exportado!');
+}
+
+/* ═══════ EVENTS ═══════ */
+$('btnValidateKey').addEventListener('click',validateKey);
+$('apiKeyInput').addEventListener('keydown',function(e){if(e.key==='Enter')validateKey()});
+$('pwToggle').addEventListener('click',function(){
+  var inp=$('apiKeyInput');
+  var isP=inp.type==='password';
+  inp.type=isP?'text':'password';
+  this.innerHTML=isP?'<i class="fas fa-eye-slash"></i>':'<i class="fas fa-eye"></i>';
+});
+
+$('btnAnalyze').addEventListener('click',analyzeHair);
+$('btnBackKey').addEventListener('click',function(){showScr('key')});
+$('btnBackUpload').addEventListener('click',function(){showScr('upload')});
+
+$('btnGenerate').addEventListener('click',function(){hideErr('prefsError');generatePlan()});
+
+$('btnExport').addEventListener('click',exportPlan);
+$('btnRestart').addEventListener('click',function(){
+  state.photoFile=null;state.photoBase64=null;state.analysis=null;state.preferences=null;state.carePlan=null;
+  store.del('analysis');store.del('carePlan');store.del('preferences');
+  photoPrev.style.display='none';uplPlaceholder.style.display='';
+  uploadZone.classList.remove('has');$('btnAnalyze').disabled=true;
+  photoInput.value='';$('inpDesire').value='';$('inpRef').value='';$('inpFreq').value='';
+  document.querySelectorAll('.pri-chip input:checked').forEach(function(c){c.checked=false});
+  showScr('upload');
+});
+
+/* ═══════ INIT ═══════ */
+(function init(){
+  /* restore API key */
+  var savedKey=store.get('apiKey','');
+  var savedModel=store.get('model','GPT-5.4');
+  if(savedKey){
+    $('apiKeyInput').value=savedKey;
+    state.apiKey=savedKey;
+  }
+  $('modelSelect').value=savedModel;
+  state.model=savedModel;
+
+  /* restore analysis session */
+  var savedAnalysis=store.get('analysis',null);
+  var savedPlan=store.get('carePlan',null);
+  var savedPrefs=store.get('preferences',null);
+
+  if(savedKey&&savedAnalysis&&savedPlan){
+    state.analysis=savedAnalysis;
+    state.carePlan=savedPlan;
+    state.preferences=savedPrefs;
+    renderReport();
+    renderCalendar();
+    showScr('calendar');
+  }else if(savedKey&&savedAnalysis){
+    state.analysis=savedAnalysis;
+    renderReport();
+    if(savedPrefs){
+      state.preferences=savedPrefs;
+      $('inpDesire').value=savedPrefs.desire||'';
+      $('inpRef').value=savedPrefs.reference||'';
+      $('inpFreq').value=savedPrefs.frequency||'';
+    }
+    showScr('report');
+  }else if(savedKey){
+    showScr('upload');
+  }
+})();
+</script>
+</body>
+</html>
